@@ -96,7 +96,7 @@ app.post('/upload', (req,res) => {
           else{
               res.json({
                   msg: 'File uploaded!',
-                  file: `http://localhost:5000/upload/${req.file.filename}`
+                  file: `/upload/${req.file.filename}`
               })
           }
       }
