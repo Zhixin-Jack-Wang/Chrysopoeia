@@ -10,7 +10,7 @@ import logo from "../../assets/Icon.png";
 class Register extends Component {
   state = {
     isRegistered: false,
-    msg: ""
+    errors: []
   };
   componentDidMount() {}
 
@@ -31,35 +31,21 @@ class Register extends Component {
     const p2 = this.form.password2.value;
     const email = this.form.email.value;
     const name = this.form.name.value;
-    console.log(p1);
-    console.log(p2);
-    console.log(email);
-    console.log(name);
-
-    //validation
-    // if (email === "" || p1 === "" || p2 === "" || name === "") {
-    //   this.setState({
-    //     msg: "Error : Please enter all fields!"
-    //   });
-    // } else if (p1 !== p2) {
-    //   this.setState({
-    //     msg: "Error : The passwords you entered do not  match!"
-    //   });
-    // } else {
     const body = {
       name: name,
       email: email,
       password: p1,
       password2: p2
     };
-    Axios.post("/users/register", body).then(response => {
-      console.log(response);
-      if (response.data === "already registered") {
-        console.log("already registered");
-      } else this.setState({ isRegistered: true });
-    });
-    console.log("registered");
-    // }
+    Axios.post("/users/register", body)
+      .then(response => {
+        console.log(response);
+        this.setState({ isRegistered: true });
+      })
+      .catch(({ response: { data } }) => {
+        console.log(data.errors);
+        this.setState({ errors: data.errors });
+      });
   };
 
   render() {
@@ -121,9 +107,9 @@ class Register extends Component {
                   />
                 </div>
 
-                {this.state.msg === "" || (
+                {this.state.errors.length === 0 || (
                   <div className="msg-holder">
-                    <div>{this.state.msg}</div>
+                    <div>{this.state.errors[0].msg}</div>
                   </div>
                 )}
 

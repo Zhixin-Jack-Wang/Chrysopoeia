@@ -28,7 +28,7 @@ router.post("/register", (req, res) => {
   }
 
   if (errors.length > 0) {
-    res.json("register", {
+    res.status(400).json({
       errors,
       name,
       email,
@@ -42,7 +42,7 @@ router.post("/register", (req, res) => {
         // User exits
         // res.json('already registered');
         errors.push({ msg: "Email is already registered" });
-        res.json("register", {
+        res.status(400).json({
           errors,
           name,
           email,
@@ -81,20 +81,37 @@ router.post("/register", (req, res) => {
   }
 });
 
-// Login Handle
-// router.post('/login', (req, res, next)=>{
-//     passport.authenticate('local', {
-//         successRedirect: '/dashboard',
-//         failureRedirect: '/users/login',
-//         failureFlash: true
-//     })(req, res, next);
-// });
-router.post("/login", passport.authenticate("local"), (req, res) => {
-  res.json({
-    login: "success",
-    email: req.body.email
-  });
+//login authentication
+// router.post(
+//   "/login",
+//   passport.authenticate("local", function(err, user, info) {
+//     // console.log(info);
+//   }),
+//   (req, res) => {
+//     console.log("here");
+//     res.json({
+//       login: "success",
+//       email: req.body.email
+//     });
+//   }
+// );
+
+router.post("/login", function(req, res, next) {
+  passport.authenticate("local", function(err, user, info) {
+    console.log(info);
+    console.log(err);
+    console.log(user);
+    if (info) res.status(400).json(info);
+    else res.json({ login: "success", email: req.body.email });
+  })(req, res, next);
 });
+
+// router.post("/login", function(req, res, next) {
+//   passport.authenticate("local", function(err, user, info) {
+//     console.log(info);
+//     res.json("ok");
+//   })(req, res, next);
+// });
 
 // Return user
 router.post("/name", (req, res) => {
