@@ -3,62 +3,73 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../assets/Icon.png";
 import { ButtonContainer } from "./Button";
-import { FaSignOutAlt } from 'react-icons/fa';
+import { FaSignOutAlt } from "react-icons/fa";
 import { GiChest } from "react-icons/gi";
-import Axios from 'axios';
-export default class Navbar extends Component {
-
+import { connect } from "react-redux";
+class Navbar extends Component {
   render() {
-    const {name,email,inventory} = this.props;
+    const { name, email, inventory } = this.props.user;
     return (
       <Nav className="navbar navbar-expand-sm  navbar-dark px-sm-5">
-        <Link to={{
-                pathname:"/users/dashboard",
-                state:{
-                    email:email,
-                    userName: name
-                }}} >
+        <Link
+          to={{
+            pathname: "/users/dashboard",
+            state: {
+              email: email,
+              userName: name
+            }
+          }}
+        >
           <img src={logo} alt="store" className="navbar-brand" />
         </Link>
         <ul className="navbar-nav align-items-center">
           <li className="nav-item ml-5">
-            <Link to={{
-                pathname:"/users/dashboard",
-                state:{
-                    email:email,
-                    userName: name
-                }}}  className="nav-link">
+            <Link
+              to={{
+                pathname: "/users/dashboard",
+                state: {
+                  email: email,
+                  userName: name
+                }
+              }}
+              className="nav-link"
+            >
               <span className="ctlg">Catalogue</span>
             </Link>
           </li>
         </ul>
-        <Link to={{
-                pathname:"/users/mystuff",
-                state:{
-        
-                  ...this.props
-                }
-              
-              }} className="ml-auto">
+        <Link
+          to={{
+            pathname: "/users/mystuff"
+            // state: {
+            //   ...this.props
+            // }
+          }}
+          className="ml-auto"
+        >
           <ButtonContainer>
             <span className="mr-2">
-              <GiChest/>
-
+              <GiChest />
             </span>
             {`${name}'s`} stuffs
           </ButtonContainer>
         </Link>
 
-        <Link to={{
-                pathname:"/users/login",
-                state:{
-                    userEmail:email,
-                    userName: name
-                }}} className="ml-auto" id="logout-btn">
+        <Link
+          to={{
+            pathname: "/users/login",
+            state: {
+              userEmail: email,
+              userName: name
+            }
+          }}
+          className="ml-auto"
+          id="logout-btn"
+        >
           <ButtonContainer>
             <span className="mr-2">
-              <i className="fa fa-sign-out-alt"></i>
-              <FaSignOutAlt/>
+              <i className="fa fa-sign-out-alt" />
+              <FaSignOutAlt />
             </span>
             logout
           </ButtonContainer>
@@ -68,6 +79,9 @@ export default class Navbar extends Component {
   }
 }
 
+const mapStateToProps = state => ({ user: state.auth.user });
+
+export default connect(mapStateToProps)(Navbar);
 const Nav = styled.nav`
   background: var(--mainYellow);
   .nav-link {
@@ -82,4 +96,3 @@ const Nav = styled.nav`
     .navbar-nav {
       flex-direction: row !important;
 `;
-

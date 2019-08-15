@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import Axios from "axios";
 import { Link, Route, Redirect } from "react-router-dom";
+import { userLogin } from "../../store/actions/authActions.js";
 import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../../../node_modules/bootswatch/dist/journal/bootstrap.min.css";
 import styled from "styled-components";
 import logo from "../../assets/Icon.png";
+import { connect } from "react-redux";
 class Login extends Component {
   state = {
     isLogin: false,
@@ -17,26 +19,18 @@ class Login extends Component {
   // Submit Handler
   formSubmit = e => {
     e.preventDefault();
-    console.log(this.form.email.value);
-    console.log(this.form.password.value);
+
     const body = {
       email: this.form.email.value,
       password: this.form.password.value
     };
-    Axios.post("/users/login", body)
-      .then(response => {
-        this.setState({ isLogin: true, email: response.data.email });
-        console.log({ email: response });
-      })
-      .catch(err => {
-        this.setState({ isLogin: false, errors: err.response.data });
-        console.log(err.response);
-      });
+
+    this.props.userLogin(body);
   };
 
   // Redirect
   renderRedirect = () => {
-    if (this.state.isLogin)
+    if (this.props.auth.isLogin)
       return (
         <Redirect
           to={{
@@ -82,9 +76,9 @@ class Login extends Component {
                   />
                 </div>
 
-                {this.state.errors && (
+                {this.props.auth.errors && (
                   <div className="msg-holder">
-                    <div>{this.state.errors.message}</div>
+                    <div>{this.props.auth.errors.message}</div>
                   </div>
                 )}
 
@@ -105,7 +99,16 @@ class Login extends Component {
     );
   }
 }
-export default Login;
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(
+  mapStateToProps,
+  { userLogin }
+)(Login);
+
 const DivWrapper = styled.div`
   display: flex;
   justify-content: center;
