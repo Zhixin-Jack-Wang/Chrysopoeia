@@ -1,4 +1,4 @@
-import { USER_LOGIN, LOGIN_FAILED } from "./types";
+import { USER_LOGIN, LOGIN_FAILED, LOG_OUT } from "./types";
 import axios from "axios";
 
 export const userLogin = body => dispatch => {
@@ -34,6 +34,13 @@ export const userLogin = body => dispatch => {
         payload: { errors: err.response.data }
       });
     });
+};
+
+//LOGOUT
+export const logOut = () => dispatch => {
+  dispatch({
+    type: LOG_OUT
+  });
 };
 
 export const addItem = body => dispatch => {

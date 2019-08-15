@@ -86,11 +86,14 @@ class MyStuff extends Component {
       owneremail: this.props.user.email
     };
     // console.log(body);
-    Axios.put("/users/item", body).then(response => {
-      // console.log(response);
-      this.updateInventory();
-      this.handleClose();
-    });
+    // Axios.put("/users/item", body).then(response => {
+    //   // console.log(response);
+    //   this.updateInventory();
+    //   this.handleClose();
+    // });
+
+    //redux
+    this.props.addItem(body);
   };
 
   uploadHandler = e => {
@@ -351,5 +354,5 @@ const mapStateToProps = state => ({ user: state.auth.user });
 
 export default connect(
   mapStateToProps,
-  { userLogin }
+  { userLogin, addItem }
 )(MyStuff);
