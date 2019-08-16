@@ -36,7 +36,11 @@ export const authReducers = (state = initialState, action) => {
         catalogue: action.payload.catalogue
       };
     case EDT_ITEM:
-      return state;
+      return {
+        ...state,
+        user: action.payload.user,
+        catalogue: action.payload.catalogue
+      };
     default:
       return state;
   }

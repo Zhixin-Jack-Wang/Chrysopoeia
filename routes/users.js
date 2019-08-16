@@ -149,7 +149,7 @@ router.put("/name", (req, res) => {
   );
   res.json("update done");
 });
-// Update item
+//Update item
 router.put(
   "/item/update",
   (
@@ -179,14 +179,10 @@ router.put(
           "inventory.$.description": description
         }
       },
-      err => {
-        if (err) {
-          return res.status(404).json({ message: "Error" });
-        }
-        return res.status(200).json({
-          success: true,
-          message: "success"
-        });
+      async () => {
+        const catalogue = await getInv();
+        const user = await getUser(email);
+        res.status(200).json({ catalogue: catalogue, user: user });
       }
     );
   }

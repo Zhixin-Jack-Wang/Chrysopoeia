@@ -73,4 +73,18 @@ export const delItem = (email, pname) => dispatch => {
 };
 
 //EDIT ITEM
-export const edtItem = () => dispatch => {};
+export const edtItem = body => dispatch => {
+  axios
+    .put("/users/item/update", body)
+    .then(response => {
+      console.log(response);
+      dispatch({
+        type: EDT_ITEM,
+        payload: {
+          user: response.data.user,
+          catalogue: response.data.catalogue
+        }
+      });
+    })
+    .catch(e => console.log(e.response));
+};

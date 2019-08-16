@@ -74,11 +74,10 @@ class myItem extends Component {
       ownername: this.props.user.name,
       owneremail: this.props.user.email
     };
-    Axios.put("/users/item/update", body).then(response => {
-      this.props.updateInventory();
-      this.handleClose();
-    });
+    this.props.edtItem(body);
+    this.handleClose();
   };
+
   handleShow = (mode, img) => {
     if (mode) {
       this.setState({ imageUrl: img });
