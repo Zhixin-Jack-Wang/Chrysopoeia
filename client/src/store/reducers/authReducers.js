@@ -1,4 +1,11 @@
-import { USER_LOGIN, LOGIN_FAILED, ADD_ITEM, LOG_OUT } from "../actions/types";
+import {
+  USER_LOGIN,
+  LOGIN_FAILED,
+  ADD_ITEM,
+  LOG_OUT,
+  DEL_ITEM,
+  EDT_ITEM
+} from "../actions/types";
 import React from "react";
 
 const initialState = { isLogin: false, user: {}, errors: "", catalogue: [] };
@@ -22,6 +29,14 @@ export const authReducers = (state = initialState, action) => {
         user: action.payload.user,
         catalogue: action.payload.catalogue
       };
+    case DEL_ITEM:
+      return {
+        ...state,
+        user: action.payload.user,
+        catalogue: action.payload.catalogue
+      };
+    case EDT_ITEM:
+      return state;
     default:
       return state;
   }

@@ -197,13 +197,13 @@ router.put("/item/delete", ({ body: { email, pname } }, res) => {
   User.findOneAndUpdate(
     { email: email },
     { $pull: { inventory: { pname: pname } } },
-    err => {
-      if (err) {
-        return res.status(404).json({ message: "Error" });
-      }
-      return res.status(200).json({
-        success: true,
-        message: "success"
+    async () => {
+      const catalogue = await getInv();
+      const user = await getUser(email);
+
+      res.status(200).json({
+        catalogue: catalogue,
+        user: user
       });
     }
   );
@@ -248,7 +248,6 @@ router.put(
         res.status(200).json({ catalogue: catalogue, user: user });
       }
     );
-    // res.json("deleted");
   }
 );
 

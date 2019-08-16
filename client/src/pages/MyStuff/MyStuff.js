@@ -26,7 +26,6 @@ import { userLogin, addItem } from "../../store/actions/authActions.js";
 
 class MyStuff extends Component {
   state = {
-    inventory: [],
     show: false,
     fieldArr: ["Item Name", "expect", "mode"],
     offer: ["Incoming", "Outgoing", "Terminated", "Accepted"],
@@ -85,13 +84,6 @@ class MyStuff extends Component {
       ownername: this.props.user.name,
       owneremail: this.props.user.email
     };
-    // console.log(body);
-    // Axios.put("/users/item", body).then(response => {
-    //   // console.log(response);
-    //   this.updateInventory();
-    //   this.handleClose();
-    // });
-
     //redux
     this.props.addItem(body);
     this.handleClose();
@@ -158,14 +150,7 @@ class MyStuff extends Component {
               <Title name="My" title="Inventory" />
               <div className="row">
                 {this.props.user.inventory.map(e => {
-                  return (
-                    <MyItem
-                      key={e._id}
-                      {...e}
-                      user={this.props.user}
-                      updateInventory={this.updateInventory}
-                    />
-                  );
+                  return <MyItem key={e._id} {...e} />;
                 })}
               </div>
             </div>

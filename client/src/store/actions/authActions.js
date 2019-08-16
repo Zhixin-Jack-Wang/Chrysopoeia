@@ -1,7 +1,14 @@
-import { USER_LOGIN, LOGIN_FAILED, LOG_OUT, ADD_ITEM } from "./types";
+import {
+  USER_LOGIN,
+  LOGIN_FAILED,
+  LOG_OUT,
+  ADD_ITEM,
+  DEL_ITEM,
+  EDT_ITEM
+} from "./types";
 import axios from "axios";
 
-//Login
+//LOGIN
 export const userLogin = body => dispatch => {
   axios
     .post("/users/login", body)
@@ -32,8 +39,8 @@ export const logOut = () => dispatch => {
   });
 };
 
+//ADD ITEM
 export const addItem = body => dispatch => {
-  console.log("action : addItem");
   axios
     .put("/users/item", body)
     .then(response => {
@@ -45,5 +52,25 @@ export const addItem = body => dispatch => {
         }
       });
     })
-    .catch();
+    .catch(e => console.log(e.response));
 };
+
+//DELETE ITEM
+export const delItem = (email, pname) => dispatch => {
+  axios
+    .put("/users/item/delete", { email: email, pname: pname })
+    .then(response => {
+      console.log(response);
+      dispatch({
+        type: DEL_ITEM,
+        payload: {
+          user: response.data.user,
+          catalogue: response.data.catalogue
+        }
+      });
+    })
+    .catch(e => console.log(e.response));
+};
+
+//EDIT ITEM
+export const edtItem = () => dispatch => {};
