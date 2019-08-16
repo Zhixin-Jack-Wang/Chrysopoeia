@@ -122,22 +122,6 @@ router.post("/login", function(req, res, next) {
   })(req, res, next);
 });
 
-// router.post("/login", function(req, res, next) {
-//   passport.authenticate("local", function(err, user, info) {
-//     console.log(info);
-//     res.json("ok");
-//   })(req, res, next);
-// });
-
-// Return user
-// router.post("/name", (req, res) => {
-//   User.findOne()
-//     .byEmail(req.body.email)
-//     .exec(function(err, user) {
-//       res.json(user);
-//     });
-// });
-
 // Change name
 router.put("/name", (req, res) => {
   User.findOneAndUpdate(
@@ -247,7 +231,7 @@ router.put(
   }
 );
 
-//  Add offer
+//Add offer
 router.put(
   "/offer",
   (
@@ -299,13 +283,10 @@ router.put(
                 }
               }
             },
-            err => {
-              if (err) {
-                return res.status(404).json({ message: "Error" });
-              }
-              return res.status(200).json({
-                success: true,
-                message: "success"
+            async () => {
+              const user = await getUser(inEmail);
+              res.status(200).json({
+                user: user
               });
             }
           );
@@ -330,21 +311,6 @@ router.put(
 //         )
 
 // })
-
-router.post("/offer", ({ body: { email, offerId } }, res) => {
-  User.aggregate([
-    { $match: { email: email } },
-    { $unwind: "$offer" },
-    { $match: { "offer.offerId": offerId } }
-  ])
-    .then(find => {
-      // console.log(find);
-      res.send(find[0].offer.conversation);
-    })
-    .catch(err => {
-      res.json(err);
-    });
-});
 
 //set offer status
 router.put(
@@ -384,16 +350,6 @@ router.put(
   }
 );
 
-// Get inventory
-router.get("/inv", (req, res) => {
-  var query = User.find({}).select("inventory -_id");
-
-  query.exec(function(err, inventory) {
-    if (err) return next(err);
-    res.send(inventory);
-  });
-});
-
 // Add Conversation
 router.put(
   "/conv",
@@ -411,13 +367,18 @@ router.put(
               offer: { $elemMatch: { offerId: offerId } }
             },
             { $push: { "offer.$.conversation": { from, message } } },
-            err => {
-              if (err) {
-                return res.status(404).json({ message: "Error" });
-              }
-              return res.status(200).json({
-                success: true,
-                message: "success"
+            async () => {
+              const find = await User.aggregate([
+                { $match: { email: emailPost } },
+                { $unwind: "$offer" },
+                { $match: { "offer.offerId": offerId } }
+              ]);
+              const conv = find[0].offer.conversation;
+
+              const user = await getUser(emailPost);
+              res.status(200).json({
+                user: user,
+                conv: conv
               });
             }
           );
@@ -426,5 +387,21 @@ router.put(
     );
   }
 );
+
+//Get Conversation
+router.post("/offer", ({ body: { email, offerId } }, res) => {
+  User.aggregate([
+    { $match: { email: email } },
+    { $unwind: "$offer" },
+    { $match: { "offer.offerId": offerId } }
+  ])
+    .then(find => {
+      // console.log(find);
+      res.send(find[0].offer.conversation);
+    })
+    .catch(err => {
+      res.json(err);
+    });
+});
 
 module.exports = router;

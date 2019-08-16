@@ -5,3 +5,8 @@ export const LOG_OUT = "LOG_OUT";
 export const ADD_ITEM = "ADD_ITEM";
 export const DEL_ITEM = "DEL_ITEM";
 export const EDT_ITEM = "EDT_ITEM";
+
+export const SET_OFFER = "SET_OFFER";
+export const MAKE_OFFER = "MAKE_OFFER";
+export const ADD_CONV = "ADD_CONV";
+export const GET_CONV = "GET_CONV";

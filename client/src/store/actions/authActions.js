@@ -4,7 +4,11 @@ import {
   LOG_OUT,
   ADD_ITEM,
   DEL_ITEM,
-  EDT_ITEM
+  EDT_ITEM,
+  SET_OFFER,
+  MAKE_OFFER,
+  ADD_CONV,
+  GET_CONV
 } from "./types";
 import axios from "axios";
 
@@ -87,4 +91,48 @@ export const edtItem = body => dispatch => {
       });
     })
     .catch(e => console.log(e.response));
+};
+
+//MAKE OFFER
+export const mkOffer = body => dispatch => {
+  axios
+    .put("/users/offer", body)
+    .then(response => {
+      console.log(response);
+      dispatch({ type: MAKE_OFFER, payload: response.data });
+    })
+    .catch(err => err.response);
+};
+
+//SET OFFER
+export const setOffer = body => dispatch => {
+  axios
+    .put("/users/offer", body)
+    .then(response => {
+      console.log(response);
+      dispatch({ type: MAKE_OFFER, payload: response.data });
+    })
+    .catch(err => err.response);
+};
+
+//ADD CONVERSATION
+export const addConv = body => dispatch => {
+  axios
+    .put("/users/conv", body)
+    .then(response => {
+      console.log(response);
+      dispatch({ type: ADD_CONV, payload: response.data });
+    })
+    .catch(err => err.response);
+};
+
+//GET CONVERSATION
+export const getConv = body => dispatch => {
+  axios
+    .put("/users/offer", body)
+    .then(response => {
+      console.log(response);
+      dispatch({ type: MAKE_OFFER, payload: response.data });
+    })
+    .catch(err => err.response);
 };

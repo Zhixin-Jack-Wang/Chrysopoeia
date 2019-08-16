@@ -4,11 +4,21 @@ import {
   ADD_ITEM,
   LOG_OUT,
   DEL_ITEM,
-  EDT_ITEM
+  EDT_ITEM,
+  SET_OFFER,
+  MAKE_OFFER,
+  ADD_CONV,
+  GET_CONV
 } from "../actions/types";
 import React from "react";
 
-const initialState = { isLogin: false, user: {}, errors: "", catalogue: [] };
+const initialState = {
+  isLogin: false,
+  user: {},
+  errors: "",
+  catalogue: [],
+  conv: []
+};
 
 export const authReducers = (state = initialState, action) => {
   switch (action.type) {
@@ -41,6 +51,14 @@ export const authReducers = (state = initialState, action) => {
         user: action.payload.user,
         catalogue: action.payload.catalogue
       };
+    case MAKE_OFFER:
+      return {
+        ...state,
+        user: action.payload.user
+      };
+    case ADD_CONV:
+      return { ...state, user: action.payload.user, conv: action.payload.conv };
+
     default:
       return state;
   }
