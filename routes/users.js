@@ -6,6 +6,29 @@ const shortid = require("shortid");
 // User model
 const User = require("../models/User");
 
+const getInv = async () => {
+  try {
+    const cat = await User.find({}).select("inventory -_id");
+    const catalogue = [];
+    cat.forEach(({ inventory }) => {
+      inventory.forEach(i => catalogue.push(i));
+    });
+    // console.log(catalogue);
+    return catalogue;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+//getUser
+const getUser = async email => {
+  try {
+    return await User.findOne().byEmail(email);
+  } catch (error) {
+    console.log(err);
+  }
+};
+
 // Register Handle
 router.post("/register", (req, res) => {
   const { name, email, password, password2 } = req.body;
@@ -81,28 +104,21 @@ router.post("/register", (req, res) => {
   }
 });
 
-//login authentication
-// router.post(
-//   "/login",
-//   passport.authenticate("local", function(err, user, info) {
-//     // console.log(info);
-//   }),
-//   (req, res) => {
-//     console.log("here");
-//     res.json({
-//       login: "success",
-//       email: req.body.email
-//     });
-//   }
-// );
-
+//login
 router.post("/login", function(req, res, next) {
-  passport.authenticate("local", function(err, user, info) {
-    console.log(info);
-    console.log(err);
-    console.log(user);
+  passport.authenticate("local", async function(err, user, info) {
     if (info) res.status(400).json(info);
-    else res.json({ login: "success", email: req.body.email });
+    else {
+      console.log(req.body.email);
+      const catalogue = await getInv();
+      const user = await getUser(req.body.email);
+      res.json({
+        login: "success",
+        email: req.body.email,
+        catalogue: catalogue,
+        user: user
+      });
+    }
   })(req, res, next);
 });
 
@@ -114,13 +130,13 @@ router.post("/login", function(req, res, next) {
 // });
 
 // Return user
-router.post("/name", (req, res) => {
-  User.findOne()
-    .byEmail(req.body.email)
-    .exec(function(err, user) {
-      res.json(user);
-    });
-});
+// router.post("/name", (req, res) => {
+//   User.findOne()
+//     .byEmail(req.body.email)
+//     .exec(function(err, user) {
+//       res.json(user);
+//     });
+// });
 
 // Change name
 router.put("/name", (req, res) => {
@@ -193,7 +209,7 @@ router.put("/item/delete", ({ body: { email, pname } }, res) => {
   );
 });
 
-// Add item
+//Add item
 router.put(
   "/item",
   (
@@ -226,14 +242,10 @@ router.put(
           }
         }
       },
-      err => {
-        if (err) {
-          return res.status(404).json({ message: "Error" });
-        }
-        return res.status(200).json({
-          success: true,
-          message: "success"
-        });
+      async () => {
+        const catalogue = await getInv();
+        const user = await getUser(email);
+        res.status(200).json({ catalogue: catalogue, user: user });
       }
     );
     // res.json("deleted");

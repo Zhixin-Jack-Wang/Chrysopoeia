@@ -17,7 +17,11 @@ export const authReducers = (state = initialState, action) => {
     case LOG_OUT:
       return { ...state, isLogin: false };
     case ADD_ITEM:
-      return state;
+      return {
+        ...state,
+        user: action.payload.user,
+        catalogue: action.payload.catalogue
+      };
     default:
       return state;
   }

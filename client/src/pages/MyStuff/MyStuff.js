@@ -94,6 +94,7 @@ class MyStuff extends Component {
 
     //redux
     this.props.addItem(body);
+    this.handleClose();
   };
 
   uploadHandler = e => {

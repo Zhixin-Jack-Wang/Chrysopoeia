@@ -1,33 +1,22 @@
-import { USER_LOGIN, LOGIN_FAILED, LOG_OUT } from "./types";
+import { USER_LOGIN, LOGIN_FAILED, LOG_OUT, ADD_ITEM } from "./types";
 import axios from "axios";
 
+//Login
 export const userLogin = body => dispatch => {
   axios
     .post("/users/login", body)
     .then(response => {
       console.log({ action: "log in success" });
-      //retrieve user
-      axios.post("/users/name", { email: body.email }).then(response => {
-        console.log(response);
-        const user = response.data;
-        axios
-          .get("/users/inv")
-          .then(({ data }) => {
-            const catalogue = [];
-            data.forEach(({ inventory }) => {
-              inventory.forEach(i => catalogue.push(i));
-            });
-            dispatch({
-              type: USER_LOGIN,
-              payload: { user: response.data, catalogue: catalogue }
-            });
-          })
-          .catch(err => console.log(err.response));
+      console.log(response);
+      dispatch({
+        type: USER_LOGIN,
+        payload: {
+          user: response.data.user,
+          catalogue: response.data.catalogue
+        }
       });
     })
     .catch(err => {
-      //   this.setState({ isLogin: false, errors: err.response.data });
-
       console.log(err.response);
       dispatch({
         type: LOGIN_FAILED,
@@ -48,15 +37,13 @@ export const addItem = body => dispatch => {
   axios
     .put("/users/item", body)
     .then(response => {
-      console.log(response);
-      axios
-        .post("/users/name", {
-          email: body.email
-        })
-        .then(response => {
-          console.log(response);
-        })
-        .catch(error => console.log(error.response));
+      dispatch({
+        type: ADD_ITEM,
+        payload: {
+          user: response.data.user,
+          catalogue: response.data.catalogue
+        }
+      });
     })
-    .catch(error => console.log(error.response));
+    .catch();
 };
