@@ -8,7 +8,8 @@ import {
   SET_OFFER,
   MAKE_OFFER,
   ADD_CONV,
-  GET_CONV
+  GET_CONV,
+  CLR_ERR
 } from "../actions/types";
 import React from "react";
 
@@ -63,6 +64,12 @@ export const authReducers = (state = initialState, action) => {
       return {
         ...state,
         user: action.payload.user
+      };
+
+    case CLR_ERR:
+      return {
+        ...state,
+        errors: ""
       };
     default:
       return state;

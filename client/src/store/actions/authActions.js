@@ -8,7 +8,8 @@ import {
   SET_OFFER,
   MAKE_OFFER,
   ADD_CONV,
-  GET_CONV
+  GET_CONV,
+  CLR_ERR
 } from "./types";
 import axios from "axios";
 
@@ -41,6 +42,11 @@ export const logOut = () => dispatch => {
   dispatch({
     type: LOG_OUT
   });
+};
+
+//CLEAR ERRORS
+export const clrErr = () => dispatch => {
+  dispatch({ type: CLR_ERR });
 };
 
 //ADD ITEM

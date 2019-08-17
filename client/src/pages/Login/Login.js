@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Axios from "axios";
 import { Link, Route, Redirect } from "react-router-dom";
-import { userLogin } from "../../store/actions/authActions.js";
+import { userLogin, clrErr } from "../../store/actions/authActions.js";
 import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../../../node_modules/bootswatch/dist/journal/bootstrap.min.css";
 import styled from "styled-components";
@@ -9,12 +9,12 @@ import logo from "../../assets/Icon.png";
 import { connect } from "react-redux";
 class Login extends Component {
   state = {
-    isLogin: false,
-    email: "",
     errors: ""
   };
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.props.clrErr();
+  }
 
   // Submit Handler
   formSubmit = e => {
@@ -30,7 +30,8 @@ class Login extends Component {
 
   // Redirect
   renderRedirect = () => {
-    if (this.props.auth.isLogin)
+    if (this.props.auth.isLogin) {
+      this.props.clrErr();
       return (
         <Redirect
           to={{
@@ -41,6 +42,7 @@ class Login extends Component {
           }}
         />
       );
+    }
   };
 
   render() {
@@ -106,7 +108,7 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { userLogin }
+  { userLogin, clrErr }
 )(Login);
 
 const DivWrapper = styled.div`
