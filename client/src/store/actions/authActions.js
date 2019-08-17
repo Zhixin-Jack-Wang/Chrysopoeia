@@ -107,10 +107,10 @@ export const mkOffer = body => dispatch => {
 //SET OFFER
 export const setOffer = body => dispatch => {
   axios
-    .put("/users/offer", body)
+    .put("/users/offer/set", body)
     .then(response => {
       console.log(response);
-      dispatch({ type: MAKE_OFFER, payload: response.data });
+      dispatch({ type: SET_OFFER, payload: response.data });
     })
     .catch(err => err.response);
 };

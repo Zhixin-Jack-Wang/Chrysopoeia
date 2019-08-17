@@ -17,17 +17,6 @@ class OfferDetails extends Component {
     redirect: false
   };
 
-  updateOffer = (email, offerId) => {
-    const body = {
-      email,
-      offerId
-    };
-    Axios.post("/users/offer", body).then(response => {
-      console.log({ data: response.data });
-      this.setState({ conversation: response.data });
-    });
-  };
-
   setOffer = (userEmail, otherEmail, offerId, status) => {
     const body = {
       userEmail,
@@ -35,11 +24,11 @@ class OfferDetails extends Component {
       offerId,
       status
     };
-    // console.log(body);
-    Axios.put("/users/offer/set", body).then(response => {
-      console.log(response);
+
+    this.props.setOffer(body);
+    setTimeout(() => {
       this.setState({ redirect: true });
-    });
+    }, 1000);
   };
 
   convertDate = iso => {
@@ -92,11 +81,6 @@ class OfferDetails extends Component {
       from,
       message
     };
-
-    // Axios.put("/users/conv", body).then(response => {
-    //   this.updateOffer(emailPost, offerId);
-    //   this.msg.value = "";
-    // });
 
     this.props.addConv(body);
     setTimeout(() => {

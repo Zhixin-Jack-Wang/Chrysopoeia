@@ -316,6 +316,7 @@ router.put(
 router.put(
   "/offer/set",
   ({ body: { userEmail, otherEmail, offerId, status } }, res) => {
+    console.log(status);
     User.findOneAndUpdate(
       { email: userEmail, offer: { $elemMatch: { offerId: offerId } } },
       {
@@ -334,13 +335,10 @@ router.put(
                 "offer.$.status": status
               }
             },
-            err => {
-              if (err) {
-                return res.status(404).json({ message: "Error" });
-              }
-              return res.status(200).json({
-                success: true,
-                message: "success"
+            async () => {
+              const user = await getUser(otherEmail);
+              res.status(200).json({
+                user: user
               });
             }
           );

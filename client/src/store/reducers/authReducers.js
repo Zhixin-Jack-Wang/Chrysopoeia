@@ -59,6 +59,11 @@ export const authReducers = (state = initialState, action) => {
     case ADD_CONV:
       return { ...state, user: action.payload.user, conv: action.payload.conv };
 
+    case SET_OFFER:
+      return {
+        ...state,
+        user: action.payload.user
+      };
     default:
       return state;
   }

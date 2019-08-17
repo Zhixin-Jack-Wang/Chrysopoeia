@@ -31,11 +31,11 @@ class Dashboard extends Component {
 
   componentDidMount() {
     //delete later
-    const body = {
-      email: "jack@gmail.com",
-      password: "123456"
-    };
-    this.props.userLogin(body);
+    // const body = {
+    //   email: "jack@gmail.com",
+    //   password: "123456"
+    // };
+    // this.props.userLogin(body);
     setTimeout(() => {
       this.setState({ catalogue: this.props.catalogue });
     }, 1000);
