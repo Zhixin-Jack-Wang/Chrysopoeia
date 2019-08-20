@@ -5,6 +5,9 @@ import Nav from "../../components/Navbar";
 import Modal from "../../components/Modal";
 import styled from "styled-components";
 export default class MyItemDetails extends Component {
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
   state = {
     openModal: false
   };

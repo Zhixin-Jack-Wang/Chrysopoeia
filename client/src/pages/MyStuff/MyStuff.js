@@ -29,12 +29,13 @@ class MyStuff extends Component {
     show: false,
     fieldArr: ["Item Name", "expect", "mode"],
     offer: ["Incoming", "Outgoing", "Terminated", "Accepted"],
-    rendering: "inventory",
+    rendering: "",
     offerType: "incoming"
   };
 
   componentDidMount() {
-    console.log("did mount");
+    window.scrollTo(0, 0);
+
     // const body = {
     //   email: "jack@gmail.com",
     //   password: "123456"

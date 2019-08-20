@@ -7,15 +7,14 @@ import styled from "styled-components";
 import Nav from "../../components/Navbar";
 import Title from "../../components/Title";
 import Item from "../../components/Item";
-import Modal from "../../components/Modal";
-import { GiBoatFishing } from "react-icons/gi";
-import { Button } from "react-bootstrap";
+
 import { connect } from "react-redux";
 
-import { userLogin } from "../../store/actions/authActions.js";
+import { userLogin, resetScroll } from "../../store/actions/authActions.js";
 class Dashboard extends Component {
   state = {
-    catalogue: []
+    catalogue: [],
+    scrollPosition: {}
   };
   sortArr = arr => {
     arr.sort((a, b) => {
@@ -27,7 +26,6 @@ class Dashboard extends Component {
     });
     return arr;
   };
-
   componentDidMount() {
     //delete later
     // const body = {
@@ -37,16 +35,21 @@ class Dashboard extends Component {
     // this.props.userLogin(body);
     setTimeout(() => {
       this.setState({ catalogue: this.props.catalogue });
+      window.scrollTo(0, this.props.scroll);
     }, 1000);
   }
 
   searchHandler = value => {
+    window.scrollTo(0, 0);
     this.setState({
       catalogue: this.props.catalogue.filter(e =>
         e.pname.toUpperCase().includes(value.toUpperCase())
       )
     });
   };
+  componentWillUnmount() {
+    this.props.resetScroll(window.pageYOffset);
+  }
 
   render() {
     return (
@@ -71,11 +74,12 @@ class Dashboard extends Component {
 }
 const mapStateToProps = state => ({
   user: state.auth.user,
-  catalogue: state.auth.catalogue
+  catalogue: state.auth.catalogue,
+  scroll: state.auth.scroll
 });
 export default connect(
   mapStateToProps,
-  { userLogin }
+  { userLogin, resetScroll }
 )(Dashboard);
 
 const ItemWrapper = styled.section``;

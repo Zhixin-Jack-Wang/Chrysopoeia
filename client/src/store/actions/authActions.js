@@ -8,7 +8,7 @@ import {
   SET_OFFER,
   MAKE_OFFER,
   ADD_CONV,
-  GET_CONV,
+  Reset_Scroll,
   CLR_ERR
 } from "./types";
 import axios from "axios";
@@ -141,4 +141,9 @@ export const getConv = body => dispatch => {
       dispatch({ type: MAKE_OFFER, payload: response.data });
     })
     .catch(err => err.response);
+};
+
+//Reset Scroll
+export const resetScroll = position => dispatch => {
+  dispatch({ type: Reset_Scroll, payload: position });
 };

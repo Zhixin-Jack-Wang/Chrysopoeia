@@ -8,6 +8,9 @@ export default class ItemDetails extends Component {
   state = {
     openModal: false
   };
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
   makeoffer = () => {
     this.setState({ openModal: true });
   };

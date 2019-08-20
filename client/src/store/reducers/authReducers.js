@@ -8,7 +8,7 @@ import {
   SET_OFFER,
   MAKE_OFFER,
   ADD_CONV,
-  GET_CONV,
+  Reset_Scroll,
   CLR_ERR
 } from "../actions/types";
 import React from "react";
@@ -18,7 +18,8 @@ const initialState = {
   user: {},
   errors: "",
   catalogue: [],
-  conv: []
+  conv: [],
+  scroll: 0
 };
 
 export const authReducers = (state = initialState, action) => {
@@ -70,6 +71,12 @@ export const authReducers = (state = initialState, action) => {
       return {
         ...state,
         errors: ""
+      };
+
+    case Reset_Scroll:
+      return {
+        ...state,
+        scroll: action.payload
       };
     default:
       return state;

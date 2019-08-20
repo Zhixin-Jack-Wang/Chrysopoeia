@@ -12,7 +12,6 @@ import OfferDetails from "./pages/OfferDetails/OfferDetails";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../node_modules/font-awesome/css/font-awesome.min.css";
-
 class App extends Component {
   render() {
     return (

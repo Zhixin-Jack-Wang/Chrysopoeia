@@ -11,3 +11,5 @@ export const SET_OFFER = "SET_OFFER";
 export const MAKE_OFFER = "MAKE_OFFER";
 export const ADD_CONV = "ADD_CONV";
 export const GET_CONV = "GET_CONV";
+
+export const Reset_Scroll = "Reset_Scroll";

@@ -91,6 +91,7 @@ class OfferDetails extends Component {
 
   componentDidMount = () => {
     console.log("mount");
+    window.scrollTo(0, 0);
     this.setState({
       conversation: this.props.location.state.offer.conversation
     });

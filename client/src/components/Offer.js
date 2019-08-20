@@ -30,125 +30,36 @@ function convertDate(iso) {
 }
 
 export default function Offer({ offer, status, user }) {
-  if (status === "incoming")
-    return (
-      <DivWrapper>
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Initiator</th>
-              <th>Money Offer</th>
-              <th>Item Offer</th>
-              <th>My Item</th>
-              <th>Date</th>
-              <th>Link</th>
-            </tr>
-          </thead>
-          <tbody>
-            {offer.map((e, index) => (
-              <>
-                <tr key={index}>
-                  <td>{index}</td>
-                  <td>{e.initiator}</td>
-                  <td>{e.moneyoffer.amount}</td>
-                  <td>{e.itemoffer ? e.itemoffer.pname : "none"}</td>
-                  <td>{e.targetItem.pname}</td>
-                  <td>{convertDate(e.date)}</td>
-                  <td>
-                    <Link
-                      to={{
-                        pathname: "/users/mystuff/offer/details",
-                        state: {
-                          user,
-                          offer: e
-                        }
-                      }}
-                    >
-                      <ButtonWrapper>
-                        <GiTiedScroll />
-                      </ButtonWrapper>
-                    </Link>
-                  </td>
-                </tr>
-              </>
-            ))}
-          </tbody>
-        </Table>
-      </DivWrapper>
-    );
-  else if (status === "outgoing")
-    return (
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Item Owner</th>
-            <th>My Money Offer</th>
-            <th>My Item Offer</th>
-            <th>Item</th>
-            <th>Date</th>
-            <th>Link</th>
-          </tr>
-        </thead>
-        <tbody>
-          {offer.map((e, index) => (
-            <tr key={index}>
-              <td>{index}</td>
-              <td>{e.receiver}</td>
-              <td>{e.moneyoffer.amount}</td>
-              <td>{e.itemoffer ? e.itemoffer.pname : "none"}</td>
-              <td>{e.targetItem.pname}</td>
-              <td>{convertDate(e.date)}</td>
-              <td>
-                <Link
-                  to={{
-                    pathname: "/users/mystuff/offer/details",
-                    state: {
-                      user,
-                      offer: e
-                    }
-                  }}
-                >
-                  <ButtonWrapper>
-                    <GiTiedScroll />
-                  </ButtonWrapper>
-                </Link>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-    );
-  else
-    return (
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Offer Initiator</th>
-            <th>Offer Receiver</th>
-            <th>Money Offer</th>
-            <th>Item Offer</th>
-            <th>Target Item</th>
-            <th>Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          {offer.map((e, index) => (
-            <tr key={index}>
-              <td>{index}</td>
-              <td>{e.initiator}</td>
-              <td>{e.receiver}</td>
-              <td>{e.moneyoffer.amount}</td>
-              <td>{e.itemoffer ? e.itemoffer.pname : "none"}</td>
-              <td>{e.targetItem.pname}</td>
-              <td>{convertDate(e.date)}</td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-    );
+  return (
+    <DivWrapper>
+      <div className="date" />
+      <div className="items">
+        <div className="user-item">
+          <img
+            src="https://source.unsplash.com/random"
+            className="user-item-img"
+          />
+          <div className="user-item-name" />
+        </div>
+        <div className="exchange-icon" />
+        <div className="other-item">
+          <img
+            className="other-item-img"
+            src="https://source.unsplash.com/random"
+          />
+          <div className="other-item-name" />
+        </div>
+      </div>
+      <div className="actions">
+        <button className="action-chat" />
+        <div className="action-decision">
+          <button className="action-chat" />
+          <button className="action-chat" />
+        </div>
+      </div>
+      <hr />
+    </DivWrapper>
+  );
 }
 
 const ButtonWrapper = styled.span`
@@ -156,5 +67,19 @@ const ButtonWrapper = styled.span`
   font-size: 1.2rem;
 `;
 const DivWrapper = styled.div`
-  width: 100vw;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  .items {
+    display: flex;
+    justify-content: space-between;
+    img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+    }
+  }
+  .actions {
+    display: flex;
+  }
 `;

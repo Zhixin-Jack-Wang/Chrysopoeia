@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../assets/Icon.png";
 import { ButtonContainer } from "./Button";
-import { FaSignOutAlt } from "react-icons/fa";
+import { FaSignOutAlt, FaWindows } from "react-icons/fa";
 import { GiChest } from "react-icons/gi";
-import { logOut } from "../store/actions/authActions.js";
+import { logOut, resetScroll } from "../store/actions/authActions.js";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { GiBoatFishing } from "react-icons/gi";
@@ -34,7 +34,13 @@ class Navbar extends Component {
         <Nav className="navbar navbar-expand-sm  navbar-dark px-sm-5">
           {this.renderRedirect()}
           <div className="wrapper">
-            <Link to="/users/dashboard">
+            <Link
+              to="/users/dashboard"
+              onClick={() => {
+                window.scrollTo(0, 0);
+                this.props.resetScroll(0);
+              }}
+            >
               <img src={logo} alt="logo" className="navbar-brand" />
             </Link>
             <Link to="/users/dashboard" className="nav-link">
@@ -121,7 +127,7 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logOut }
+  { logOut, resetScroll }
 )(Navbar);
 
 const SectionWrapper = styled.section`
