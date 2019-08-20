@@ -226,7 +226,7 @@ class MyStuff extends Component {
             <div className="container">
               {/* My Offer */}
               <Title name={this.state.offerType} title="Offer" />
-              <div className="row">
+              <div>
                 <Offer
                   user={this.props.user}
                   offer={this.props.user.offer.filter(
@@ -243,6 +243,12 @@ class MyStuff extends Component {
   }
 }
 const ItemWrapper = styled.section`
+  th,
+  td {
+    font-size: 0.3rem;
+    padding: 0;
+    margin: 0;
+  }
   #dropdown-basic-button {
     background-color: var(--lightBlue);
     border-color: grey;
