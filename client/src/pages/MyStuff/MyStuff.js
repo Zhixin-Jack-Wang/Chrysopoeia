@@ -53,12 +53,12 @@ class MyStuff extends Component {
     });
   };
 
-  selectHandler = e => {
+  selectHandler = oft => {
     // this.setState({modalOpen:this.state.modalOpen});
-    const target = e.target.innerHTML;
-    this.drop.title = target;
-    this.drop.firstChild.innerHTML = target;
-    const oft = target[0].toLowerCase() + target.slice(1);
+    // const target = e.target.innerHTML;
+    // this.drop.title = target;
+    // this.drop.firstChild.innerHTML = target;
+    // const oft = target[0].toLowerCase() + target.slice(1);
     // console.log(oft);
     this.setState({ rendering: "offers", offerType: oft });
   };
@@ -118,34 +118,14 @@ class MyStuff extends Component {
     if (this.state.rendering === "inventory") {
       return (
         <>
-          <Nav />
+          <Nav
+            myStuff={true}
+            offer={this.state.offer}
+            invButtonClick={this.invButtonClick}
+            selectHandler={this.selectHandler}
+          />
           <ItemWrapper className="py-5">
             <div className="container">
-              <div className="d-flex flex-column">
-                <ButtonGroup aria-label="Basic example">
-                  <Button
-                    variant="secondary"
-                    className="btn-me"
-                    onClick={this.invButtonClick}
-                  >
-                    Inventory
-                  </Button>
-                  <DropdownButton
-                    ref={drop => {
-                      this.drop = drop;
-                    }}
-                    id="dropdown-basic-button"
-                    title="Offers"
-                  >
-                    {this.state.offer.map((e, index) => (
-                      <Dropdown.Item key={index} onClick={this.selectHandler}>
-                        {e}
-                      </Dropdown.Item>
-                    ))}
-                  </DropdownButton>
-                </ButtonGroup>
-              </div>
-
               {/* My Inventory */}
               <Title name="My" title="Inventory" />
               <div className="row">
@@ -170,7 +150,6 @@ class MyStuff extends Component {
                 <GiBlacksmith className="modal-icon" />
                 <Modal.Title className="modal-title">Add New Item</Modal.Title>
               </Modal.Header>
-
               <Modal.Body>
                 {/* <label htmlFor="basic-url">Information</label> */}
                 {this.state.fieldArr.map((e, index) => {
@@ -229,7 +208,6 @@ class MyStuff extends Component {
               </Modal.Footer>
             </ModalWrapper>
           </Modal>
-          )
         </>
       );
     }
@@ -238,34 +216,14 @@ class MyStuff extends Component {
     else {
       return (
         <>
-          <Nav {...this.props.user} />
+          <Nav
+            myStuff={true}
+            offer={this.state.offer}
+            invButtonClick={this.invButtonClick}
+            selectHandler={this.selectHandler}
+          />
           <ItemWrapper className="py-5">
             <div className="container">
-              <div className="d-flex flex-column">
-                <ButtonGroup aria-label="Basic example">
-                  <Button
-                    variant="secondary"
-                    className="btn-me"
-                    onClick={this.invButtonClick}
-                  >
-                    Inventory
-                  </Button>
-                  <DropdownButton
-                    ref={drop => {
-                      this.drop = drop;
-                    }}
-                    id="dropdown-basic-button"
-                    title="Offers"
-                  >
-                    {this.state.offer.map((e, index) => (
-                      <Dropdown.Item key={index} onClick={this.selectHandler}>
-                        {e}
-                      </Dropdown.Item>
-                    ))}
-                  </DropdownButton>
-                </ButtonGroup>
-              </div>
-
               {/* My Offer */}
               <Title name={this.state.offerType} title="Offer" />
               <div className="row">
@@ -301,6 +259,12 @@ const ButtonWrapper = styled.div`
     height: 5rem;
     width: 5rem;
     border-radius: 50%;
+    @media (max-width: 768px) {
+      right: 0.5rem;
+      height: 4rem;
+      width: 4rem;
+      font-size: 2rem;
+    }
   }
 `;
 

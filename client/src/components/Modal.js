@@ -67,7 +67,7 @@ class Modal extends Component {
           <div className="container">
             <div className="row">
               <div
-                className="col-8 mx-auto col-md-6 col-lg-4 p-5 text-center text-capitalize"
+                className=" mx-auto  col-md-6 col-lg-4 p-5 text-center text-capitalize"
                 id="modal"
               >
                 <h1>{pname}</h1>
@@ -149,6 +149,8 @@ const ModalContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 4;
+
   #modal {
     background: var(--mainWhite);
   }

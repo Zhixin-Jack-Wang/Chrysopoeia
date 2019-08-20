@@ -17,7 +17,6 @@ class Dashboard extends Component {
   state = {
     catalogue: []
   };
-
   sortArr = arr => {
     arr.sort((a, b) => {
       let idA = a._id;
@@ -41,52 +40,22 @@ class Dashboard extends Component {
     }, 1000);
   }
 
-  searchHandler = () => {
+  searchHandler = value => {
     this.setState({
       catalogue: this.props.catalogue.filter(e =>
-        e.pname.toUpperCase().includes(this.bar.value.toUpperCase())
+        e.pname.toUpperCase().includes(value.toUpperCase())
       )
     });
-    this.bar.value = "";
-  };
-
-  keyUpHandler = event => {
-    // Number 13 is the "Enter" key on the keyboard
-    if (event.keyCode === 13) {
-      event.preventDefault();
-      this.btn.click();
-    }
   };
 
   render() {
     return (
       <>
-        <Nav />
+        <Nav searchBar={true} searchHandler={this.searchHandler} />
 
         <ItemWrapper className="py-5">
           <div className="container">
             <Title name="Browse" title="Catalogue" />
-            <SearchWrapper>
-              <div className="search">
-                <span className="search-icon">
-                  <GiBoatFishing />
-                </span>
-                <input
-                  ref={bar => (this.bar = bar)}
-                  type="text"
-                  className="search-bar"
-                  onKeyUp={this.keyUpHandler}
-                />
-                <Button
-                  variant="primary"
-                  ref={btn => (this.btn = btn)}
-                  className="search-btn"
-                  onClick={this.searchHandler}
-                >
-                  Search
-                </Button>
-              </div>
-            </SearchWrapper>
             <div className="row">
               {this.sortArr(this.state.catalogue).map(e => {
                 return (
@@ -110,29 +79,3 @@ export default connect(
 )(Dashboard);
 
 const ItemWrapper = styled.section``;
-const SearchWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content:center .search {
-    width: 45%;
-    position: relative;
-    margin-top: 1rem;
-    margin-bottom: 3rem;
-    &-bar {
-      width: 75%;
-      padding-left: 2.5rem;
-    }
-    &-icon {
-      position: absolute;
-      color: var(--mainBlue);
-      left: 1rem;
-      font-size: 1.2rem;
-    }
-    &-btn {
-      padding: 0.18rem 1rem;
-      margin-left: 1rem;
-      background-color: var(--lightBlue);
-      border: none;
-    }
-  }
-`;

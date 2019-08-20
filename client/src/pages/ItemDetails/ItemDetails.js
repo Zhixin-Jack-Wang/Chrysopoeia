@@ -47,12 +47,13 @@ export default class ItemDetails extends Component {
             </div>
             {/* prdoduct info */}
 
-            <div className="col-10 mx-auto col-md-6 my-3 text-capitalize">
+            <div className="col-12 col-md-6 my-3 text-capitalize">
               {/* <h1>category : nothing yet</h1> */}
               <div className="by">
-              <h4 className="text-title text-uppercase text-muted mt-3 mb-2">
-                posted by : <span className="text-uppercase">{ownername}</span>
-              </h4>
+                <h4 className="text-title text-uppercase text-muted mt-3 mb-2">
+                  posted by :{" "}
+                  <span className="text-uppercase">{ownername}</span>
+                </h4>
               </div>
               <h4 className="text-blue">
                 <strong>
@@ -89,11 +90,16 @@ export default class ItemDetails extends Component {
 }
 
 const SectionWrapper = styled.section`
-.title{
-  font-family: var(--fontCinzel);
-  color:var(--mainDark);
-}
-.by{
-  margin-bottom:2rem;
-}
+  .title {
+    font-family: var(--fontCinzel);
+    color: var(--mainDark);
+  }
+  .by {
+    margin-bottom: 2rem;
+    h4 {
+      @media (max-width: 768px) {
+        font-size: 1rem;
+      }
+    }
+  }
 `;
