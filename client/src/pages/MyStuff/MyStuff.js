@@ -6,7 +6,7 @@ import "../../../node_modules/bootswatch/dist/journal/bootstrap.min.css";
 import Nav from "../../components/Navbar";
 import Title from "../../components/Title";
 import MyItem from "../../components/MyItem";
-import Offer from "../../components/Offer";
+import Offers from "../../components/Offers";
 import {
   Button,
   ButtonGroup,
@@ -228,7 +228,7 @@ class MyStuff extends Component {
               {/* My Offer */}
               <Title name={this.state.offerType} title="Offer" />
               <div>
-                <Offer
+                <Offers
                   user={this.props.user}
                   offer={this.props.user.offer.filter(
                     e => e.status === this.state.offerType

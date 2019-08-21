@@ -25,7 +25,6 @@ export default class ItemDetails extends Component {
   };
   render() {
     const {
-      user,
       pname,
       img,
       expect,
@@ -36,7 +35,7 @@ export default class ItemDetails extends Component {
     } = this.props.location.state;
     return (
       <SectionWrapper>
-        <Nav {...user} />
+        <Nav />
         <div className="container py-5">
           <div className="row">
             <div className="col-10 mx-auto text-center text-slanted text-blue my-5">
@@ -71,10 +70,7 @@ export default class ItemDetails extends Component {
               <div>
                 <Link
                   to={{
-                    pathname: "/users/dashboard",
-                    state: {
-                      email: user.email
-                    }
+                    pathname: "/users/dashboard"
                   }}
                 >
                   <ButtonContainer cart>back to catalogue</ButtonContainer>
