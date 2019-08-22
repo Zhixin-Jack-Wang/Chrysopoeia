@@ -130,9 +130,10 @@ class MyStuff extends Component {
               {/* My Inventory */}
               <Title name="My" title="Inventory" />
               <div className="row">
-                {this.props.user.inventory.map(e => {
-                  return <MyItem key={e._id} {...e} />;
-                })}
+                {this.props.user.inventory &&
+                  this.props.user.inventory.map(e => {
+                    return <MyItem key={e._id} {...e} />;
+                  })}
               </div>
             </div>
           </ItemWrapper>
@@ -228,13 +229,15 @@ class MyStuff extends Component {
               {/* My Offer */}
               <Title name={this.state.offerType} title="Offer" />
               <div>
-                <Offers
-                  user={this.props.user}
-                  offer={this.props.user.offer.filter(
-                    e => e.status === this.state.offerType
-                  )}
-                  status={this.state.offerType}
-                />
+                {this.props.user.offer && (
+                  <Offers
+                    user={this.props.user}
+                    offer={this.props.user.offer.filter(
+                      e => e.status === this.state.offerType
+                    )}
+                    status={this.state.offerType}
+                  />
+                )}
               </div>
             </div>
           </ItemWrapper>

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Axios from "axios";
 import { Link, Route, Redirect } from "react-router-dom";
-import { userLogin, clrErr } from "../../store/actions/authActions.js";
+import { userLogin, clrErr, logOut } from "../../store/actions/authActions.js";
 import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../../../node_modules/bootswatch/dist/journal/bootstrap.min.css";
 import styled from "styled-components";
@@ -9,11 +9,14 @@ import logo from "../../assets/Icon.png";
 import { connect } from "react-redux";
 class Login extends Component {
   state = {
-    errors: ""
+    errors: "",
+    mounted: false
   };
 
   componentDidMount() {
     this.props.clrErr();
+    this.props.logOut();
+    this.setState({ mounted: true });
   }
 
   // Submit Handler
@@ -30,7 +33,7 @@ class Login extends Component {
 
   // Redirect
   renderRedirect = () => {
-    if (this.props.auth.isLogin) {
+    if (this.props.auth.isLogin && this.state.mounted) {
       this.props.clrErr();
       return (
         <Redirect
@@ -108,7 +111,7 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { userLogin, clrErr }
+  { userLogin, clrErr, logOut }
 )(Login);
 
 const DivWrapper = styled.div`

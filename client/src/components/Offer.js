@@ -3,7 +3,23 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { setOffer, addConv, getConv } from "../store/actions/authActions.js";
-const Offer = ({ user, other, convertDate, offer }) => {
+
+const Offer = props => {
+  const { user, other, convertDate, offer, status } = props;
+
+  const changeOffer = (userEmail, otherEmail, offerId, status) => {
+    const body = {
+      userEmail,
+      otherEmail,
+      offerId,
+      status
+    };
+    props.setOffer(body);
+  };
+  // console.log(offer);
+  // console.log(user);
+
+  console.log(status);
   return (
     <DivWrapper>
       <div className="date">
@@ -32,8 +48,51 @@ const Offer = ({ user, other, convertDate, offer }) => {
       <div className="actions">
         <button className="action-chat">Chat Log</button>
         <div className="action-decision">
-          <button className="action-accept">Accept</button>
-          <button className="action-decline">Decline</button>
+          {status === "incoming" && (
+            <>
+              <button
+                className="action-accept"
+                onClick={() => {
+                  changeOffer(
+                    other.item.owneremail,
+                    user.item.owneremail,
+                    offer.offerId,
+                    "accepted"
+                  );
+                }}
+              >
+                Accept
+              </button>
+              <button
+                className="action-decline"
+                onClick={() => {
+                  changeOffer(
+                    other.item.owneremail,
+                    user.item.owneremail,
+                    offer.offerId,
+                    "terminated"
+                  );
+                }}
+              >
+                Decline
+              </button>
+            </>
+          )}
+          {status === "outgoing" && (
+            <button
+              className="action-decline"
+              onClick={() => {
+                changeOffer(
+                  other.item.owneremail,
+                  user.item.owneremail,
+                  offer.offerId,
+                  "terminated"
+                );
+              }}
+            >
+              Recall
+            </button>
+          )}
         </div>
       </div>
       <div className="divider" />
@@ -42,7 +101,7 @@ const Offer = ({ user, other, convertDate, offer }) => {
 };
 
 const mapStateToProps = state => ({
-  user: state.auth.user,
+  userInfo: state.auth.user,
   conv: state.auth.conv
 });
 

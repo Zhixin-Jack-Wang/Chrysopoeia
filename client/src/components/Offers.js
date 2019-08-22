@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Offer from "./Offer";
 import { FaBreadSlice } from "react-icons/fa";
+import { connect } from "react-redux";
 function convertDate(iso) {
   const date = new Date(iso);
   let month = date.getMonth() + 1;
@@ -28,57 +29,61 @@ function convertDate(iso) {
 }
 
 //"Incoming", "Outgoing", "Terminated", "Accepted"],
-const mapUser = (offer, status) => {
+const mapUser = (offer, status, userInfo) => {
   let offerInfo, user, other;
-  switch (status) {
-    case "incoming":
-      user = {
-        name: offer.receiver,
-        item: offer.targetItem,
-        moneyoffer: 0
-      };
-      other = {
-        name: offer.initiator,
-        item: offer.itemoffer,
-        moneyoffer: offer.moneyoffer
-      };
-      return (offerInfo = { user, other });
-    case "outgoing":
-      user = {
-        name: offer.initiator,
-        item: offer.itemoffer,
-        moneyoffer: offer.moneyoffer
-      };
-      other = {
-        name: offer.receiver,
-        item: offer.targetItem,
-        moneyoffer: 0
-      };
-      return (offerInfo = { user, other });
-    default:
-      break;
+  const userEmail = userInfo.email;
+  if (userEmail !== offer.itemoffer.owneremail) {
+    user = {
+      name: offer.receiver,
+      item: offer.targetItem,
+      moneyoffer: 0
+    };
+    other = {
+      name: offer.initiator,
+      item: offer.itemoffer,
+      moneyoffer: offer.moneyoffer
+    };
+    return (offerInfo = { user, other });
+  } else {
+    user = {
+      name: offer.initiator,
+      item: offer.itemoffer,
+      moneyoffer: offer.moneyoffer
+    };
+    other = {
+      name: offer.receiver,
+      item: offer.targetItem,
+      moneyoffer: 0
+    };
+    return (offerInfo = { user, other });
   }
 };
-
-export default function Offers({ offer, status, user }) {
+const Offers = ({ offer, status, user }) => {
   return (
     <DivWrapper>
       {offer.map(e => {
-        console.log(status);
-        let offerInfo = mapUser(e, status);
-        console.log({ offerInfo: offerInfo });
+        let offerInfo = mapUser(e, status, user);
         return (
           <Offer
             key={e._id}
             {...offerInfo}
             convertDate={convertDate}
             offer={e}
+            status={status}
           />
         );
       })}
     </DivWrapper>
   );
-}
+};
+const mapStateToProps = state => ({
+  user: state.auth.user
+});
+
+export default connect(
+  mapStateToProps,
+  {}
+)(Offers);
 
 const DivWrapper = styled.div`
   margin-top: 2rem;

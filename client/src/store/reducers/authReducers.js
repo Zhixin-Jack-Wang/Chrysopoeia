@@ -34,7 +34,7 @@ export const authReducers = (state = initialState, action) => {
     case LOGIN_FAILED:
       return { ...state, isLogin: false, errors: action.payload.errors };
     case LOG_OUT:
-      return { ...state, isLogin: false };
+      return { ...state, user: {}, isLogin: false };
     case ADD_ITEM:
       return {
         ...state,
