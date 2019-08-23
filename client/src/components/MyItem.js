@@ -13,7 +13,10 @@ import { Modal, Button } from "react-bootstrap";
 import Axios from "axios";
 import { connect } from "react-redux";
 import { edtItem, delItem } from "../store/actions/authActions.js";
-
+import {
+  ItemWrapper,
+  ModalWrapper
+} from "../components/styled/MyItemWrapper.js";
 class myItem extends Component {
   state = {
     show: false,
@@ -143,6 +146,24 @@ class myItem extends Component {
               <h5 className="text-blue font-italic mb-0">{expect}</h5>
             </div>
           </div>
+          <div className="item-btns">
+            <button
+              onClick={() => {
+                this.handleShow(true, img);
+              }}
+            >
+              <GiFairyWand className="btn-icon" />
+              Edit
+            </button>
+            <button
+              onClick={() => {
+                this.handleShow(false, img);
+              }}
+            >
+              <GiSkullCrossedBones className="btn-icon" />
+              Delete
+            </button>
+          </div>
         </ItemWrapper>
         {this.state.edit ? (
           <Modal show={this.state.show} onHide={this.handleClose}>
@@ -152,19 +173,6 @@ class myItem extends Component {
                 <Modal.Title className="modal-title">Update Item</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                {/* <label htmlFor="basic-url">Information</label> */}
-                {/* {this.state.fieldArr.map((e,index)=>{
-                                return (
-                                <InputGroup key={index} className="mb-3">
-                                    <InputGroup.Prepend>
-                                    <InputGroup.Text id="basic-addon3" >
-                                        {e}
-                                    </InputGroup.Text>
-                                    </InputGroup.Prepend>
-                                    <FormControl ref={input=>this["input"+index]=input} id={`input${index}`} aria-describedby="basic-addon3" />
-                                </InputGroup>
-                            )})} */}
-
                 <InputGroup className="mb-3">
                   <InputGroup.Prepend>
                     <InputGroup.Text id="basic-addon3">
@@ -247,7 +255,7 @@ class myItem extends Component {
             </ModalWrapper>
           </Modal>
         ) : (
-          <Modal show={this.state.show} onHide={this.handleClose}>
+          <Modal show={this.state.show} onHide={this.handleClose} centered>
             <ModalWrapper>
               <Modal.Header className="modal-header" closeButton>
                 <GiSkullCrossedBones className="modal-icon" />
@@ -284,118 +292,3 @@ export default connect(
   mapStateToProps,
   { delItem, edtItem }
 )(myItem);
-
-const ItemWrapper = styled.div`
-  .card {
-    border-color: transparent;
-    transition: all 1s linear;
-  }
-  .card-footer {
-    background: transparent;
-    border-top: transparent;
-    transition: all 1s linear;
-  }
-  &:hover {
-    .card {
-      border: 0.04rem solid rgba(0, 0, 0, 0.2);
-      box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.2);
-    }
-    .card-footer {
-      background: rgba(247, 247, 247);
-    }
-  }
-  .img-container {
-    position: relative;
-    overflow: hidden;
-  }
-  .card-img-top {
-    transition: all 1s linear;
-  }
-  .img-container:hover .card-img-top {
-    transform: scale(1.2);
-  }
-  .group-btn {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    padding: 0.2rem 0.4rem;
-    background: var(--mainYellow);
-    border: none;
-    color: var(--mainWhite);
-    font-size: 1.4rem;
-    border-radius: 0.5rem 0 0 0;
-    transform: translate(100%, 100%);
-    transition: all 1s ease-in-out;
-  }
-  .edit-btn {
-    background: var(--mainYellow);
-    border: none;
-    color: var(--mainWhite);
-  }
-  .delete-btn {
-    background: var(--mainYellow);
-    border: none;
-    color: var(--mainWhite);
-  }
-  .img-container:hover .group-btn {
-    transform: translate(0, 0);
-  }
-
-  .edit-btn:hover {
-    color: var(--mainDark);
-    cursor: pointer;
-  }
-  .delete-btn:hover {
-    color: var(--mainRed);
-    cursor: pointer;
-  }
-  .titleWrapper {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    padding: 0rem 1rem;
-  }
-  .title {
-    padding-top: 0.5rem;
-    font-family: var(--fontCinzel);
-    text-align: center;
-  }
-  .exchangefor {
-    font-weight: bold;
-    color: var(--mainBlue);
-  }
-`;
-
-const ModalWrapper = styled.form`
-        .modal-header{
-            background-color:var(--mainYellow);
-        }
-        .modal-icon{
-            font-size:2rem
-            margin-right:1rem;
-        }
-        .modal-title{
-            color:var(--mainDark);
-        }
-        .select-btn{
-          border: 1px solid #ccc;
-          display: inline-block;
-          padding: 6px 12px;
-          cursor: pointer;
-          background-color:#e9ecef;
-          color:#495057;
-          border-radius:.25rem;
-      }
-      .upload-btn{
-          background-color:var(--lightBlue);
-          border:none;
-      }
-      input[type="file"] {
-          display: none;
-      }
-      .img-preview{
-          max-width:300px;
-          max-height:300px;
-      }
-       
-    `;

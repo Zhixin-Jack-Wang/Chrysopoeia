@@ -42,7 +42,7 @@ class MyStuff extends Component {
     // };
     // this.props.userLogin(body);
     // setTimeout(() => {}, 5000);
-    if (this.props.location.state) {
+    if (this.props.location.state && this.props.location.state.status) {
       const { status } = this.props.location.state;
       this.setState({ rendering: "", offerType: status });
     }
