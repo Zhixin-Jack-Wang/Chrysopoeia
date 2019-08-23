@@ -63,19 +63,16 @@ const mapUser = (offer, status, userInfo) => {
 const Offers = ({ offer, status, user }) => {
   return (
     <DivWrapper>
-      <Chat show={true} />
       {offer.map(e => {
         let offerInfo = mapUser(e, status, user);
         return (
-          <>
-            <Offer
-              key={e._id}
-              {...offerInfo}
-              convertDate={convertDate}
-              offer={e}
-              status={status}
-            />
-          </>
+          <Offer
+            key={e._id}
+            {...offerInfo}
+            convertDate={convertDate}
+            offer={e}
+            status={status}
+          />
         );
       })}
     </DivWrapper>

@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { setOffer, addConv, getConv } from "../store/actions/authActions.js";
+import Chat from "./Chat";
 
 const Offer = props => {
   const { user, other, convertDate, offer, status } = props;
+  const [open, setOpen] = useState(true);
 
   const changeOffer = (userEmail, otherEmail, offerId, status) => {
     const body = {
@@ -16,53 +18,78 @@ const Offer = props => {
     };
     props.setOffer(body);
   };
-  // console.log(offer);
-  // console.log(user);
 
-  console.log(status);
+  const openChat = value => {
+    setOpen(value);
+  };
   return (
-    <DivWrapper>
-      <div className="date">
-        <strong>Date:</strong> {convertDate(offer.date)}
-      </div>
-      <div className="items">
-        <div className="item">
-          <Link to={{ pathname: "/details", state: { ...user.item } }}>
-            <img src={user.item.img} className="item-img" />
-          </Link>
-          <p className="item-name">
-            <strong>Your Item:</strong> <br />
-            {user.item.pname}
-          </p>
+    <>
+      {open && <Chat openChat={openChat} />}
+      <DivWrapper>
+        <div className="date">
+          <strong>Date:</strong> {convertDate(offer.date)}
         </div>
-        <div className="item">
-          <Link to={{ pathname: "/details", state: { ...other.item } }}>
-            <img className="item-img" src={other.item.img} />
-          </Link>
-          <p className="item-name">
-            <strong>Their Item:</strong> <br />
-            {other.item.pname}
-          </p>
+        <div className="items">
+          <div className="item">
+            <Link to={{ pathname: "/details", state: { ...user.item } }}>
+              <img src={user.item.img} className="item-img" />
+            </Link>
+            <p className="item-name">
+              <strong>Your Item:</strong> <br />
+              {user.item.pname}
+            </p>
+          </div>
+          <div className="item">
+            <Link to={{ pathname: "/details", state: { ...other.item } }}>
+              <img className="item-img" src={other.item.img} />
+            </Link>
+            <p className="item-name">
+              <strong>Their Item:</strong> <br />
+              {other.item.pname}
+            </p>
+          </div>
         </div>
-      </div>
-      <div className="actions">
-        <button className="action-chat">Chat Log</button>
-        <div className="action-decision">
-          {status === "incoming" && (
-            <>
-              <button
-                className="action-accept"
-                onClick={() => {
-                  changeOffer(
-                    other.item.owneremail,
-                    user.item.owneremail,
-                    offer.offerId,
-                    "accepted"
-                  );
-                }}
-              >
-                Accept
-              </button>
+        <div className="actions">
+          <button
+            className="action-chat"
+            onClick={() => {
+              openChat(true);
+            }}
+          >
+            Chat Log
+          </button>
+          <div className="action-decision">
+            {status === "incoming" && (
+              <>
+                <button
+                  className="action-accept"
+                  onClick={() => {
+                    changeOffer(
+                      other.item.owneremail,
+                      user.item.owneremail,
+                      offer.offerId,
+                      "accepted"
+                    );
+                  }}
+                >
+                  Accept
+                </button>
+                <button
+                  className="action-decline"
+                  onClick={() => {
+                    changeOffer(
+                      other.item.owneremail,
+                      user.item.owneremail,
+                      offer.offerId,
+                      "terminated"
+                    );
+                  }}
+                >
+                  Decline
+                </button>
+              </>
+            )}
+            {status === "outgoing" && (
               <button
                 className="action-decline"
                 onClick={() => {
@@ -74,29 +101,14 @@ const Offer = props => {
                   );
                 }}
               >
-                Decline
+                Recall
               </button>
-            </>
-          )}
-          {status === "outgoing" && (
-            <button
-              className="action-decline"
-              onClick={() => {
-                changeOffer(
-                  other.item.owneremail,
-                  user.item.owneremail,
-                  offer.offerId,
-                  "terminated"
-                );
-              }}
-            >
-              Recall
-            </button>
-          )}
+            )}
+          </div>
         </div>
-      </div>
-      <div className="divider" />
-    </DivWrapper>
+        <div className="divider" />
+      </DivWrapper>
+    </>
   );
 };
 

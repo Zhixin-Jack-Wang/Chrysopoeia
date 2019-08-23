@@ -57,7 +57,6 @@ class Navbar extends Component {
             <div onClick={() => this.props.logOut()}>
               <ButtonContainer>
                 <span className="mr-2">
-                  <i className="fa fa-sign-out-alt" />
                   <FaSignOutAlt />
                 </span>
                 logout

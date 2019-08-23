@@ -1,20 +1,34 @@
 import { Modal, Button } from "react-bootstrap";
-import React from "react";
-import styled from "styled-components";
+import React, { useEffect, useRef, useState } from "react";
+import Wrapper from "./styled/Wrapper";
 const Chat = props => {
+  console.log("opened");
+  const ref = useRef(null);
+  useEffect(() => {
+    console.log(ref.current.scrollHeight);
+    ref.current.scrollTop = ref.current.scrollHeight;
+  }, []);
+  const [input, setInput] = useState("");
+
+  const handleChange = e => {
+    setInput(e.target.value);
+  };
+  const submitHandler = e => {
+    e.preventDefault();
+    console.log(input);
+  };
   return (
     <Wrapper>
       <div
         className="backdrop"
         onClick={e => {
-          console.log(e.currentTarget);
+          props.openChat(false);
         }}
       >
         <div
           className="chat-modal"
           onClick={e => {
             e.stopPropagation();
-            console.log(e.currentTarget);
           }}
         >
           <div className="chat-header">
@@ -23,12 +37,46 @@ const Chat = props => {
               <span className="chat-title-text">Chat</span>
             </div>
           </div>
+          <div />
           <div className="chat-body">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe,
-            dolore?
+            <div className="chat-msg" ref={ref}>
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+              Reprehenderit minus laborum ullam, a quasi impedit tenetur ipsum
+              aperiam adipisci rem aliquam. Quae expedita distinctio, cumque aut
+              necessitatibus, autem id delectus minus at quidem, sit doloremque?
+              Sed dolorum laborum quos ipsum dolor dolore adipisci neque
+              voluptas incidunt? Velit voluptas quidem voluptate? Molestiae at
+              laudantium ipsam accusamus atque maiores quasi dolorum explicabo
+              voluptates eum maxime enim doloribus commodi nihil, assumenda
+              distinctio inventore harum nemo mollitia vero consequuntur. Nemo
+              fuga ratione, iste autem, ut fugit quam, cupiditate optio
+              explicabo pariatur dolor dolorum reiciendis ad cum mollitia
+              veritatis repellat quibusdam velit expedita molestiae officiis!
+            </div>
+
+            <form className="chat-input" onSubmit={submitHandler}>
+              <textarea
+                className="chat-type"
+                type="text"
+                value={input}
+                onChange={handleChange}
+              />
+
+              <i
+                className="far fa-paper-plane chat-send"
+                onClick={submitHandler}
+              />
+            </form>
           </div>
           <div className="chat-footer">
-            <button className="close-btn">Close</button>
+            <button
+              className="close-btn"
+              onClick={() => {
+                props.openChat(false);
+              }}
+            >
+              Close
+            </button>
           </div>
         </div>
       </div>
@@ -37,60 +85,3 @@ const Chat = props => {
 };
 
 export default Chat;
-
-const Wrapper = styled.section`
-  .backdrop {
-    width: 100%;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
-    position: fixed;
-    display: flex;
-    top: 0;
-    left: 0;
-    z-index: 100;
-    padding: 0 1rem;
-    justify-content: center;
-  }
-  .chat-modal {
-    position: fixed;
-    width: 90%;
-    max-width: 36rem;
-    align-self: center;
-    background-color: white;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-    z-index: 103;
-  }
-  .chat-header {
-    padding: 0.3rem 1rem;
-    background-color: var(--mainYellow);
-    .chat-title {
-      margin-bottom: 0;
-      font-size: 2rem;
-      &-text {
-        font-size: 1.5rem;
-      }
-    }
-  }
-  .chat-body {
-    margin: 1rem;
-    border: 2px solid #e5e5e5;
-    height: 50vh;
-    border-radius: 10px;
-    padding: 0.5rem;
-  }
-  .chat-footer {
-    display: flex;
-    justify-content: flex-end;
-    margin: 1rem 1rem 1rem 0;
-    .close-btn {
-      border-radius: 3px;
-      border: none;
-      color: white;
-      background-color: var(--mainGrey);
-      &:active {
-        position: relative;
-        top: 1px;
-      }
-    }
-  }
-`;
