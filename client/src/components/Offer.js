@@ -7,7 +7,7 @@ import Chat from "./Chat";
 
 const Offer = props => {
   const { user, other, convertDate, offer, status } = props;
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const changeOffer = (userEmail, otherEmail, offerId, status) => {
     const body = {
@@ -33,7 +33,12 @@ const Offer = props => {
         </div>
         <div className="items">
           <div className="item">
-            <Link to={{ pathname: "/details", state: { ...user.item } }}>
+            <Link
+              to={{
+                pathname: "/details",
+                state: { ...user.item, offer: true, status: status }
+              }}
+            >
               <img src={user.item.img} className="item-img" />
             </Link>
             <p className="item-name">
@@ -42,7 +47,12 @@ const Offer = props => {
             </p>
           </div>
           <div className="item">
-            <Link to={{ pathname: "/details", state: { ...other.item } }}>
+            <Link
+              to={{
+                pathname: "/details",
+                state: { ...other.item, offer: true, status: status }
+              }}
+            >
               <img className="item-img" src={other.item.img} />
             </Link>
             <p className="item-name">

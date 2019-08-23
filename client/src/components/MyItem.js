@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import "../../node_modules/font-awesome/css/font-awesome.min.css";
 import { GiSkullCrossedBones } from "react-icons/gi";
 import { GiFairyWand } from "react-icons/gi";
 import {
@@ -29,16 +28,6 @@ class myItem extends Component {
   handleClose = () => {
     this.setState({ show: false });
   };
-
-  // deleteItem = (email, pname) => {
-  //   this.setState({ show: false });
-
-  //   Axios.put("/users/item/delete", { email: email, pname: pname }).then(
-  //     response => {
-  //       console.log("delete");
-  //     }
-  //   );
-  // };
 
   uploadHandler = e => {
     e.preventDefault();

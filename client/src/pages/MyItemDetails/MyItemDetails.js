@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ButtonContainer } from "../../components/Button";
+import { ButtonContainer } from "../../components/styled/Button";
 import { Link } from "react-router-dom";
 import Nav from "../../components/Navbar";
 import Modal from "../../components/Modal";

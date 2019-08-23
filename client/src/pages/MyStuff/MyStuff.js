@@ -20,7 +20,7 @@ import {
 } from "react-bootstrap";
 import styled from "styled-components";
 import { GiBlacksmith } from "react-icons/gi";
-import { ButtonContainer } from "../../components/Button";
+import { ButtonContainer } from "../../components/styled/Button";
 import { connect } from "react-redux";
 import { userLogin, addItem } from "../../store/actions/authActions.js";
 
@@ -29,7 +29,7 @@ class MyStuff extends Component {
     show: false,
     fieldArr: ["Item Name", "expect", "mode"],
     offer: ["Incoming", "Outgoing", "Terminated", "Accepted"],
-    rendering: "",
+    rendering: "inventory",
     offerType: "incoming"
   };
 
@@ -42,6 +42,10 @@ class MyStuff extends Component {
     // };
     // this.props.userLogin(body);
     // setTimeout(() => {}, 5000);
+    if (this.props.location.state) {
+      const { status } = this.props.location.state;
+      this.setState({ rendering: "", offerType: status });
+    }
   }
 
   updateInventory = () => {

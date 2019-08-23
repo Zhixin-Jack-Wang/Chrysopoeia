@@ -1,18 +1,15 @@
 import { Modal, Button } from "react-bootstrap";
 import React, { useEffect, useRef, useState } from "react";
-import Wrapper from "./styled/Wrapper";
+import Wrapper from "./styled/ChatWrapper.js";
 import Msg from "./Msg.js";
 import { connect } from "react-redux";
 import { addConv, getConv } from "../store/actions/authActions.js";
 
 const Chat = props => {
   const ref = useRef(null);
-  // console.log(props.user);
-  // console.log(props.other);
-  // console.log(props.offer);
-  // console.log(props.status);
+
   const [input, setInput] = useState("");
-  // const [conv, setConv] = useState([]);
+
   useEffect(() => {
     console.log("mount");
     props.getConv(props.conv);

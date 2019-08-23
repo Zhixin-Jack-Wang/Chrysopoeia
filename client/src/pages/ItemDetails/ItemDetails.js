@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ButtonContainer } from "../../components/Button";
+import { ButtonContainer } from "../../components/styled/Button";
 import { Link } from "react-router-dom";
 import Nav from "../../components/Navbar";
 import Modal from "../../components/Modal";
@@ -31,7 +31,9 @@ export default class ItemDetails extends Component {
       mode,
       description,
       ownername,
-      item
+      item,
+      offer,
+      status
     } = this.props.location.state;
     return (
       <SectionWrapper>
@@ -67,18 +69,32 @@ export default class ItemDetails extends Component {
                 description :
               </p>
               <p className="text-muted lead">{description}</p>
-              <div>
-                <Link
-                  to={{
-                    pathname: "/users/dashboard"
-                  }}
-                >
-                  <ButtonContainer cart>back to catalogue</ButtonContainer>
-                </Link>
-                <ButtonContainer cart onClick={this.makeoffer}>
-                  {"Make an offer"}
-                </ButtonContainer>
-              </div>
+              {offer || (
+                <div>
+                  <Link
+                    to={{
+                      pathname: "/users/dashboard"
+                    }}
+                  >
+                    <ButtonContainer cart>back to catalogue</ButtonContainer>
+                  </Link>
+                  <ButtonContainer cart onClick={this.makeoffer}>
+                    {"Make an offer"}
+                  </ButtonContainer>
+                </div>
+              )}
+              {offer && (
+                <div>
+                  <Link
+                    to={{
+                      pathname: "/users/mystuff",
+                      state: { offer: true, status: status }
+                    }}
+                  >
+                    <ButtonContainer cart>Back to offer</ButtonContainer>
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         </div>

@@ -1,0 +1,52 @@
+   {status === "incoming" ? (
+              <>
+                <Button
+                  variant="primary"
+                  onClick={() => {
+                    this.msgHandler(
+                      user.email,
+                      offer.moneyoffer.payerEmail,
+                      offer.offerId,
+                      user.name
+                    );
+                  }}
+                >
+                  Post
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  variant="primary"
+                  onClick={() => {
+                    this.msgHandler(
+                      offer.targetItem.owneremail,
+                      user.email,
+                      offer.offerId,
+                      user.name
+                    );
+                  }}
+                >
+                  Post
+                </Button>
+              </>
+
+
+
+  msgHandler = (emailPost, emailReceive, offerId, from) => {
+    const message = this.msg.value;
+
+    const body = {
+      offerId,
+      emailPost,
+      emailReceive,
+      from,
+      message
+    };
+
+    this.props.addConv(body);
+    setTimeout(() => {
+      this.setState({ conversation: this.props.conv });
+      this.msg.value = "";
+    }, 1000);
+  };

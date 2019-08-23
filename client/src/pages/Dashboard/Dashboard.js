@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import Axios from "axios";
-import { Link, Route, Redirect } from "react-router-dom";
 import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "../../../node_modules/bootswatch/dist/journal/bootstrap.min.css";
 import styled from "styled-components";

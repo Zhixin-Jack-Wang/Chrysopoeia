@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { ButtonContainer } from "./Button";
-import { Dropdown } from "react-bootstrap";
-import { DropdownButton } from "react-bootstrap";
-import { Form } from "react-bootstrap";
+import { ButtonContainer } from "./styled/Button";
+import { Form, Dropdown, DropdownButton } from "react-bootstrap";
 import { connect } from "react-redux";
 import { mkOffer } from "../store/actions/authActions.js";
 class Modal extends Component {

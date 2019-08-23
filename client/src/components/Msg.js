@@ -1,5 +1,5 @@
 import React from "react";
-import { MessageWrapper } from "./styled/Wrapper";
+import { MessageWrapper } from "./styled/ChatWrapper";
 import { GiNinjaHead, GiBatMask } from "react-icons/gi";
 import { connect } from "react-redux";
 const Msg = ({ user, e }) => {

@@ -30,7 +30,6 @@ function convertDate(iso) {
   return newDate;
 }
 
-//"Incoming", "Outgoing", "Terminated", "Accepted"],
 const mapUser = (offer, status, userInfo) => {
   let offerInfo, user, other;
   const userEmail = userInfo.email;
