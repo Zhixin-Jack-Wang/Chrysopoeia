@@ -1,22 +1,53 @@
 import { Modal, Button } from "react-bootstrap";
 import React, { useEffect, useRef, useState } from "react";
 import Wrapper from "./styled/Wrapper";
+import Msg from "./Msg.js";
+import { connect } from "react-redux";
+import { addConv, getConv } from "../store/actions/authActions.js";
+
 const Chat = props => {
-  console.log("opened");
   const ref = useRef(null);
-  useEffect(() => {
-    console.log(ref.current.scrollHeight);
-    ref.current.scrollTop = ref.current.scrollHeight;
-  }, []);
+  // console.log(props.user);
+  // console.log(props.other);
+  // console.log(props.offer);
+  // console.log(props.status);
   const [input, setInput] = useState("");
+  // const [conv, setConv] = useState([]);
+  useEffect(() => {
+    console.log("mount");
+    props.getConv(props.conv);
+    console.log(ref.current.scrollHeight);
+    setTimeout(() => (ref.current.scrollTop = ref.current.scrollHeight), 100);
+  }, []);
 
   const handleChange = e => {
     setInput(e.target.value);
   };
+
   const submitHandler = e => {
     e.preventDefault();
-    console.log(input);
+    const { offerId, targetItem, itemoffer } = props.offer;
+    const message = input;
+    const from = props.user.name;
+    const emailPost = props.userInfo.email;
+    const emailReceive =
+      targetItem.owneremail === emailPost
+        ? itemoffer.owneremail
+        : targetItem.owneremail;
+    const body = {
+      offerId,
+      emailPost,
+      emailReceive,
+      from,
+      message
+    };
+    props.addConv(body);
+    setTimeout(() => {
+      setInput("");
+      if (ref.current) ref.current.scrollTop = ref.current.scrollHeight;
+    }, 1000);
   };
+
   return (
     <Wrapper>
       <div
@@ -40,33 +71,25 @@ const Chat = props => {
           <div />
           <div className="chat-body">
             <div className="chat-msg" ref={ref}>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-              Reprehenderit minus laborum ullam, a quasi impedit tenetur ipsum
-              aperiam adipisci rem aliquam. Quae expedita distinctio, cumque aut
-              necessitatibus, autem id delectus minus at quidem, sit doloremque?
-              Sed dolorum laborum quos ipsum dolor dolore adipisci neque
-              voluptas incidunt? Velit voluptas quidem voluptate? Molestiae at
-              laudantium ipsam accusamus atque maiores quasi dolorum explicabo
-              voluptates eum maxime enim doloribus commodi nihil, assumenda
-              distinctio inventore harum nemo mollitia vero consequuntur. Nemo
-              fuga ratione, iste autem, ut fugit quam, cupiditate optio
-              explicabo pariatur dolor dolorum reiciendis ad cum mollitia
-              veritatis repellat quibusdam velit expedita molestiae officiis!
+              {props.newConv.map((e, index) => (
+                <Msg key={index} e={e} />
+              ))}
             </div>
+            {props.status === "terminated" || props.status === "accepted" || (
+              <form className="chat-input" onSubmit={submitHandler}>
+                <textarea
+                  className="chat-type"
+                  type="text"
+                  value={input}
+                  onChange={handleChange}
+                />
 
-            <form className="chat-input" onSubmit={submitHandler}>
-              <textarea
-                className="chat-type"
-                type="text"
-                value={input}
-                onChange={handleChange}
-              />
-
-              <i
-                className="far fa-paper-plane chat-send"
-                onClick={submitHandler}
-              />
-            </form>
+                <i
+                  className="far fa-paper-plane chat-send"
+                  onClick={submitHandler}
+                />
+              </form>
+            )}
           </div>
           <div className="chat-footer">
             <button
@@ -84,4 +107,12 @@ const Chat = props => {
   );
 };
 
-export default Chat;
+const mapStateToProps = state => ({
+  newConv: state.auth.conv,
+  userInfo: state.auth.user
+});
+
+export default connect(
+  mapStateToProps,
+  { addConv, getConv }
+)(Chat);

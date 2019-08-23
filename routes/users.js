@@ -373,7 +373,7 @@ router.put(
               ]);
               const conv = find[0].offer.conversation;
 
-              const user = await getUser(emailReceive);
+              const user = await getUser(emailPost);
               res.status(200).json({
                 user: user,
                 conv: conv

@@ -89,20 +89,21 @@ const Wrapper = styled.section`
   }
 `;
 
-const MessageWrapper = styled.section`
-  padding: 5rem 10rem 0rem 10rem;
+export const MessageWrapper = styled.section`
+  /* padding: 5rem 10rem 0rem 10rem; */
   .avatar {
-    width: 5rem;
-    height: 5rem;
+    width: 2rem;
+    height: 3rem;
     background-color: white;
     border-radius: 50%;
-    font-size: 3rem;
-    padding: 0rem 1rem 1rem 1rem;
+    font-size: 2rem;
+    /* padding: 0rem 1rem 1rem 1rem; */
   }
   .name {
     width: 100%;
     display: flex;
     justify-content: center;
+    font-weight: bold;
   }
   .messages {
     display: flex;
@@ -110,11 +111,12 @@ const MessageWrapper = styled.section`
   }
   .message-content {
     align-self: center;
-    margin-left: 3rem;
-    margin-top: 1rem;
+    margin-left: 1rem;
+    margin-top: 0.5rem;
   }
   .date {
     margin-left: 1rem;
+    font-size: 0.6rem;
   }
 `;
 

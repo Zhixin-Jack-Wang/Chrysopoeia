@@ -8,6 +8,7 @@ import {
   SET_OFFER,
   MAKE_OFFER,
   ADD_CONV,
+  GET_CONV,
   Reset_Scroll,
   CLR_ERR
 } from "./types";
@@ -133,14 +134,8 @@ export const addConv = body => dispatch => {
 };
 
 //GET CONVERSATION
-export const getConv = body => dispatch => {
-  axios
-    .put("/users/offer", body)
-    .then(response => {
-      console.log(response);
-      dispatch({ type: MAKE_OFFER, payload: response.data });
-    })
-    .catch(err => err.response);
+export const getConv = conv => dispatch => {
+  dispatch({ type: GET_CONV, payload: conv });
 };
 
 //Reset Scroll

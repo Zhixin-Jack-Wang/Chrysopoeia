@@ -24,7 +24,9 @@ const Offer = props => {
   };
   return (
     <>
-      {open && <Chat openChat={openChat} />}
+      {open && (
+        <Chat openChat={openChat} conv={offer.conversation} {...props} />
+      )}
       <DivWrapper>
         <div className="date">
           <strong>Date:</strong> {convertDate(offer.date)}
@@ -113,8 +115,7 @@ const Offer = props => {
 };
 
 const mapStateToProps = state => ({
-  userInfo: state.auth.user,
-  conv: state.auth.conv
+  userInfo: state.auth.user
 });
 
 export default connect(

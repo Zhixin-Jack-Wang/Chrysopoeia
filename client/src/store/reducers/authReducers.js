@@ -9,9 +9,9 @@ import {
   MAKE_OFFER,
   ADD_CONV,
   Reset_Scroll,
-  CLR_ERR
+  CLR_ERR,
+  GET_CONV
 } from "../actions/types";
-import React from "react";
 
 const initialState = {
   isLogin: false,
@@ -58,6 +58,8 @@ export const authReducers = (state = initialState, action) => {
         ...state,
         user: action.payload.user
       };
+    case GET_CONV:
+      return { ...state, conv: action.payload };
     case ADD_CONV:
       return { ...state, user: action.payload.user, conv: action.payload.conv };
 
