@@ -29,7 +29,7 @@ class MyStuff extends Component {
     show: false,
     fieldArr: ["Item Name", "expect", "mode"],
     offer: ["Incoming", "Outgoing", "Terminated", "Accepted"],
-    rendering: "",
+    rendering: "inventory",
     offerType: "incoming"
   };
 
