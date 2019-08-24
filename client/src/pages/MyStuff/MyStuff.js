@@ -29,7 +29,7 @@ class MyStuff extends Component {
     show: false,
     fieldArr: ["Item Name", "expect", "mode"],
     offer: ["Incoming", "Outgoing", "Terminated", "Accepted"],
-    rendering: "inventory",
+    rendering: "",
     offerType: "incoming"
   };
 
@@ -251,12 +251,6 @@ class MyStuff extends Component {
   }
 }
 const ItemWrapper = styled.section`
-  th,
-  td {
-    font-size: 0.3rem;
-    padding: 0;
-    margin: 0;
-  }
   #dropdown-basic-button {
     background-color: var(--lightBlue);
     border-color: grey;

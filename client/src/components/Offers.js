@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import Offer from "./Offer";
-import { FaBreadSlice } from "react-icons/fa";
 import { connect } from "react-redux";
 import Chat from "./Chat";
 
@@ -42,14 +41,14 @@ const mapUser = (offer, status, userInfo) => {
     other = {
       name: offer.initiator,
       item: offer.itemoffer,
-      moneyoffer: offer.moneyoffer
+      moneyoffer: offer.moneyoffer.amount
     };
     return (offerInfo = { user, other });
   } else {
     user = {
       name: offer.initiator,
       item: offer.itemoffer,
-      moneyoffer: offer.moneyoffer
+      moneyoffer: offer.moneyoffer.amount
     };
     other = {
       name: offer.receiver,
@@ -87,5 +86,9 @@ export default connect(
 )(Offers);
 
 const DivWrapper = styled.div`
+  /* width: 100%;  */
+  /* display: flex;
+  flex-direction: column;
+  align-items: center; */
   margin-top: 2rem;
 `;

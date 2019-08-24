@@ -43,24 +43,26 @@ class Navbar extends Component {
             >
               <img src={logo} alt="logo" className="navbar-brand" />
             </Link>
-            <Link to="/users/dashboard" className="nav-link">
+            {/* <Link to="/users/dashboard" className="nav-link">
               <span className="ctlg">Catalogue</span>
-            </Link>
-            <Link to="/users/mystuff" className="mystuff-link">
-              <ButtonContainer>
-                <span className="mr-2">
-                  <GiChest />
-                </span>
-                {`${name}'s`} stuffs
-              </ButtonContainer>
-            </Link>
-            <div onClick={() => this.props.logOut()}>
-              <ButtonContainer>
-                <span className="mr-2">
-                  <FaSignOutAlt />
-                </span>
-                logout
-              </ButtonContainer>
+            </Link> */}
+            <div className="btn-wrapper">
+              <Link to="/users/mystuff" className="mystuff-link">
+                <ButtonContainer>
+                  <span className="mr-2">
+                    <GiChest />
+                  </span>
+                  {`${name}'s`} stuffs
+                </ButtonContainer>
+              </Link>
+              <div onClick={() => this.props.logOut()}>
+                <ButtonContainer>
+                  <span className="mr-2">
+                    <FaSignOutAlt />
+                  </span>
+                  logout
+                </ButtonContainer>
+              </div>
             </div>
           </div>
           {this.props.searchBar && (

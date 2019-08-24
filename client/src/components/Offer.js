@@ -3,12 +3,13 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { setOffer, addConv, getConv } from "../store/actions/authActions.js";
+import { GiCoins } from "react-icons/gi";
 import Chat from "./Chat";
+import { DivWrapper } from "./styled/OfferWrapper.js";
 
 const Offer = props => {
   const { user, other, convertDate, offer, status } = props;
   const [open, setOpen] = useState(false);
-
   const changeOffer = (userEmail, otherEmail, offerId, status) => {
     const body = {
       userEmail,
@@ -33,32 +34,52 @@ const Offer = props => {
         </div>
         <div className="items">
           <div className="item">
-            <Link
-              to={{
-                pathname: "/details",
-                state: { ...user.item, offer: true, status: status }
-              }}
-            >
-              <img src={user.item.img} className="item-img" />
-            </Link>
+            <div className="item-img">
+              <Link
+                to={{
+                  pathname: "/details",
+                  state: { ...user.item, offer: true, status: status }
+                }}
+              >
+                <img src={user.item.img} />
+              </Link>
+            </div>
             <p className="item-name">
               <strong>Your Item:</strong> <br />
               {user.item.pname}
             </p>
+            {user.moneyoffer > 0 && (
+              <div className="cash">
+                <p>
+                  <strong>+</strong> <GiCoins className="cash-icon" />{" "}
+                  {user.moneyoffer}
+                </p>
+              </div>
+            )}
           </div>
           <div className="item">
-            <Link
-              to={{
-                pathname: "/details",
-                state: { ...other.item, offer: true, status: status }
-              }}
-            >
-              <img className="item-img" src={other.item.img} />
-            </Link>
+            <div className="item-img">
+              <Link
+                to={{
+                  pathname: "/details",
+                  state: { ...other.item, offer: true, status: status }
+                }}
+              >
+                <img src={other.item.img} />
+              </Link>
+            </div>
             <p className="item-name">
               <strong>Their Item:</strong> <br />
               {other.item.pname}
             </p>
+            {other.moneyoffer > 0 && (
+              <div className="cash">
+                <p>
+                  <strong>+</strong> <GiCoins className="cash-icon" />{" "}
+                  {other.moneyoffer}
+                </p>
+              </div>
+            )}
           </div>
         </div>
         <div className="actions">
@@ -132,64 +153,3 @@ export default connect(
   mapStateToProps,
   { setOffer, addConv, getConv }
 )(Offer);
-
-const ButtonWrapper = styled.span`
-  text-align: center;
-  font-size: 1.2rem;
-`;
-const DivWrapper = styled.div`
-  display: flex;
-  max-width: 100vh;
-  flex-direction: column;
-  .date {
-  }
-  .items {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    .item {
-      max-width: 8rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      &-name {
-        width: 100%;
-        font-size: 0.8rem;
-        overflow-wrap: break-word;
-      }
-    }
-    img {
-      width: 100%;
-      height: 8rem;
-      object-fit: contain;
-    }
-  }
-  .actions {
-    display: flex;
-    justify-content: space-between;
-    .action-chat {
-      font-size: 0.8rem;
-      padding: 0.2rem;
-      border-radius: 20px;
-    }
-    .action-decision {
-      button {
-        border-radius: 3px;
-        border: none;
-        color: white;
-      }
-      .action-accept {
-        background-color: var(--lightBlue);
-        margin-right: 0.5rem;
-      }
-      .action-decline {
-        background-color: var(--mainGrey);
-      }
-    }
-  }
-  .divider {
-    margin: 1rem 0;
-    width: 100%;
-    border: 0.5px solid black;
-  }
-`;

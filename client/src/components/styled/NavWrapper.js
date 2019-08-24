@@ -9,6 +9,8 @@ export const SectionWrapper = styled.section`
 export const Nav = styled.nav`
   width: 100%;
   background: var(--mainYellow);
+  display: flex;
+  flex-wrap: wrap;
   .navbar-brand {
     @media (max-width: 768px) {
       width: 4rem;
@@ -22,6 +24,9 @@ export const Nav = styled.nav`
     align-items: center;
     justify-content: space-between;
     .mystuff-link {
+    }
+    .btn-wrapper {
+      display: flex;
     }
   }
   .nav-link {
@@ -88,6 +93,8 @@ export const SearchWrapper = styled.div`
       padding-left: 2.5rem;
       border: 0.05rem solid var(--mainWhite);
       border-radius: 5px;
+      width: 100%;
+      margin-right: 0.5rem;
     }
     &-icon {
       position: absolute;

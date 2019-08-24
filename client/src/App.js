@@ -8,7 +8,6 @@ import Welcome from "./pages/Welcome/Welcome";
 import MyStuff from "./pages/MyStuff/MyStuff";
 import ItemDetails from "./pages/ItemDetails/ItemDetails";
 import MyItemDetails from "./pages/MyItemDetails/MyItemDetails";
-import OfferDetails from "./pages/OfferDetails/OfferDetails";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../node_modules/font-awesome/css/font-awesome.min.css";
@@ -26,11 +25,6 @@ class App extends Component {
             exact
             path="/users/mystuff/details"
             component={MyItemDetails}
-          />
-          <Route
-            exact
-            path="/users/mystuff/offer/details"
-            component={OfferDetails}
           />
           <Route path="/details" component={ItemDetails} />
         </Switch>

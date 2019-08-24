@@ -80,4 +80,6 @@ export default connect(
   { userLogin, resetScroll }
 )(Dashboard);
 
-const ItemWrapper = styled.section``;
+const ItemWrapper = styled.section`
+  padding: 0;
+`;
