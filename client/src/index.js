@@ -16,17 +16,12 @@ const persistConfig = {
   storage
 };
 
+//enable ReduxDevtool
+/* window.__REDUX_DEVTOOLS_EXTENSION__ &&
+          window.__REDUX_DEVTOOLS_EXTENSION__() */
+
 const persistedReducer = persistReducer(persistConfig, rootReducer);
-const store = createStore(
-  persistedReducer,
-  compose(
-    applyMiddleware(thunk),
-    window.__REDUX_DEVTOOLS_EXTENSION__
-      ? window.__REDUX_DEVTOOLS_EXTENSION__ &&
-          window.__REDUX_DEVTOOLS_EXTENSION__()
-      : null
-  )
-);
+const store = createStore(persistedReducer, compose(applyMiddleware(thunk)));
 
 const persistor = persistStore(store);
 
