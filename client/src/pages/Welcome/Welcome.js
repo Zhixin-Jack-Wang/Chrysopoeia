@@ -18,18 +18,18 @@ class Dashboard extends Component {
                 <h4>Welcome to Chrysopoeia</h4>
                 <p>Create an account or login</p>
                 <div className="anchor-wrapper">
-                  <a
-                    href="/users/register"
+                  <Link
+                    to="/users/register"
                     className="btn btn-secondary btn-block buttons"
                   >
                     Register
-                  </a>
-                  <a
-                    href="/users/login"
-                    className="btn btn-secondary btn-block buttons login-btn"
+                  </Link>
+                  <Link
+                    to="/users/login"
+                    className="btn btn-secondary btn-block buttons"
                   >
                     Login
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
